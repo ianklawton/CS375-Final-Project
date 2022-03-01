@@ -4,7 +4,7 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: '', password: ''};
+    this.state = {username: '', password: '', button: 0};
 
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,22 +21,32 @@ class Login extends Component {
     alert('A password was submitted: ' + this.state.password);
     event.preventDefault();
 
-    fetch("/", {
-  		method: "POST",
-  		headers: {
-  			"Content-Type": "application/json"
-  		},
-  		body: JSON.stringify({
-  			username: this.state.username,
-  			plaintextPassword: this.state.password,
-  		})
-  	}).then(function (response) {
-  		if (response.status === 200) {
-  			console.log("Success");
-  		} else {
-  			console.log("Failure");
-  		}
-  	});
+    if(this.state.button == 1){
+      console.log("Login Button Worked")
+
+      fetch("/", {
+    		method: "POST",
+    		headers: {
+    			"Content-Type": "application/json"
+    		},
+    		body: JSON.stringify({
+    			username: this.state.username,
+    			plaintextPassword: this.state.password,
+    		})
+    	}).then(function (response) {
+    		if (response.status === 200) {
+    			console.log("Success");
+    		} else {
+    			console.log("Failure");
+    		}
+    	});
+
+    }
+    if(this.state.button == 2){
+      console.log("Sign Up Button Worked")
+    }
+
+
 
   }
 
@@ -56,7 +66,22 @@ class Login extends Component {
                 <input name="password" type="text" value={this.state.password}
                 onChange={this.handleChange} />
             </div>
-            <input type="submit" value="Login" />
+            <button
+               onClick={() => (this.state.button = 1)}
+               type="submit"
+
+               value="Login"
+             >
+             Login
+             </button>
+             <button
+               onClick={() => (this.state.button = 2)}
+               type="submit"
+
+               value="Sign Up"
+             >
+             Sign Up
+             </button>
         </form>
     </div>
     );
