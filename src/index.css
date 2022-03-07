@@ -20,6 +20,10 @@ ul.header li {
   list-style-type: none;
   margin: 0;
 }
+.page {
+  display: flex;
+  flex-direction: column;
+}
 ul.header {
   background-color: #111;
   padding: 0;
