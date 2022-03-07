@@ -1,10 +1,14 @@
 import React, { Component } from "react";
- 
+
 class Woods extends Component {
+
+
+
+
   render() {
     return (
       <div>
-        <h2>STUFF</h2>
+        <h2>Location:, Weather:</h2>
         <p>Farm for your inventory</p>
         <ol>
           <li>Roots</li>
@@ -17,5 +21,5 @@ class Woods extends Component {
     );
   }
 }
- 
+
 export default Woods;

@@ -3,7 +3,6 @@
 const pg = require("pg");
 const bcrypt = require("bcrypt");
 const express = require("express");
-
 const cors = require('cors')
 
 const app = express();
@@ -31,7 +30,6 @@ pool.connect().then(function () {
 
 app.use(express.json());
 app.use(express.static("public"));
-
 app.use(cors());
 //Post funtion to add a user to the database
 app.post("/signup", function (req, res) {
