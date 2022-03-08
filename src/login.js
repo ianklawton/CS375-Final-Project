@@ -20,6 +20,7 @@ class Login extends Component {
     let status = 0;
     let me = '';
     const that = this;
+
     event.preventDefault();
 
     if(this.state.button == 1){
@@ -48,9 +49,8 @@ class Login extends Component {
           console.log("Client received from server:", data);
           if (data.hasOwnProperty("token")) {
             console.log(data.token)
-            that.setState({token : true, message: 'hi'});
-            console.log(that.token)
-            that.props.setToken(true)
+            console.log(data.username)
+            that.props.setToken(data.username,data.token)
       		}
           else {
             me = data.error;
@@ -82,7 +82,7 @@ class Login extends Component {
     	}).then(function (data) {
           console.log("Client received from server:", data);
           if (status === 200) {
-            me = data.sucess;
+            me = data.success;
             that.setState({message : me});
       		}
           else {

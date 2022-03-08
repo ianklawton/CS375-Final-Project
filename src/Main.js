@@ -12,12 +12,12 @@ class Main extends Component{
   constructor(){
     super();
 
-    this.state = { token: false };
+    this.state = { username: '',token: false };
     this.setToken = this.setToken.bind(this)
  }
 
-setToken(token){
-  this.setState({token : token})
+setToken(username,token){
+  this.setState({username: username, token : token})
 }
 
 render(){
@@ -29,6 +29,7 @@ render(){
   else{
 
   return (
+
       <BrowserRouter>
       <div>
           <h1>Valley.txt</h1>
@@ -40,10 +41,10 @@ render(){
           </ul>
           <div className="content">
           <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/woods" element={<Woods/>}/>
-            <Route path="/mountain" element={<Mountain/>}/>
-            <Route path="/cave" element={<Cave/>}/>
+            <Route path="/" element={<Home username={this.state.username}/>}/>
+            <Route path="/woods" element={<Woods username={this.state.username}/>}/>
+            <Route path="/mountain" element={<Mountain username={this.state.username}/>}/>
+            <Route path="/cave" element={<Cave username={this.state.username}/>}/>
           </Routes>
           </div>
         </div>

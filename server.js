@@ -131,7 +131,7 @@ app.post("/signin", function (req, res) {
                     if (isSame) {
                         // password matched
 
-                        res.status(200).send({"token": true});
+                        res.status(200).send({"username": username,"token": true});
                     } else {
                         // password didn't match
                         res.status(401).json({"error": "Incorrect password"});
@@ -149,6 +149,34 @@ app.post("/signin", function (req, res) {
 
 });
 
+/*app.post("/collect", function (req, res) {
+  let username = req.body.username;
+  let item = req.body.item;
+
+//If statement to check if the Username and Password is in the correct format
+if (!req.body.hasOwnProperty("username") ||
+      !req.body.hasOwnProperty("item")
+    ){
+
+  res.status(401).json({"error" : "Username or Password is doesn't have the expected format"});
+
+} else{
+  //Pulling the usernames from the database
+  pool.query("SELECT username FROM users WHERE username = $1", [
+    username,
+  ])
+    .then(function (response) {
+      //If statement to check if there are usernames in the database
+      if (response.rows.length !== 0) {
+        let usernameOld = response.rows[0].username;
+        //If statement to check if the username already exist
+        if (username === usernameOld) {
+          res.status(401).json({"error": "Username already exists"});
+        }
+
+
+}
+*/
 app.listen(8080, () => {
     console.log('Listening on port 8080')
 });
