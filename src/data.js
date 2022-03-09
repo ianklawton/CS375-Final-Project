@@ -13,3 +13,11 @@ export const craftItems = [
 	{ label: "Item5", value: 5 },
 	{ label: "Item6", value: 6 },
       ];
+
+export var HomeMessages = [
+	"Welcome to your home",
+];
+
+export var CaveMessages = [
+	"Welcome to the cave",
+];

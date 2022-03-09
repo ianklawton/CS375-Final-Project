@@ -23,7 +23,7 @@ setToken(username,token){
 render(){
   const {token} = this.state.token
 
-  if(!this.state.token) {
+  if(this.state.token) {
     return <Login setToken = {this.setToken}/>
   }
   else{
