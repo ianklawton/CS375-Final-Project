@@ -19,7 +19,7 @@ let baseHealth = 100;
 let baseDefense = 0;
 let baseAttack = 2;
 let baseSpeed = 10;
-let baseInventory = {"inventory": ""};
+let baseInventory = {"inventory": []};
 
 //Connect to the database
 const Pool = pg.Pool;
@@ -194,4 +194,18 @@ function updateData(stats){
 	}).catch(function (error) {
 		console.log(error);
 	});
+}
+
+function addItem(item){
+	let itemName = item.item;
+	let itemCheck = 0;
+	for (let x = 0; x < activeStats.inventory.length; x++){
+		if (activeStats.inventory[x].hasOwnProperty(itemName)){
+			activeStats.inventory[x].itemName += 1;
+			itemCheck = 1;
+		}
+	}
+	if (itemCheck === 0){
+		activeStats.inventory.push(item);
+	}
 }
