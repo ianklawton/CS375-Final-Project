@@ -4,7 +4,7 @@ import Text from "./mountainText";
 import Heading from "./TableHead";
 import background from "./Images/Mountain.jpg";
 import Inventory from "./Inventory";
-import {collectItems} from "./Inventory";
+import {collectItems} from "./data";
 
 
 let bool = false

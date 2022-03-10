@@ -21,17 +21,3 @@ export default function Inventory (){
             <tbody id="body">{inventoryRow}</tbody>
     )
 }
-
-export function collectItems(t){
-  console.log(t)
-
-  fetch("http://localhost:8080/collect", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      item: t,
-    })
-  })
-}
