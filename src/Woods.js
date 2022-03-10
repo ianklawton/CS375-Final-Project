@@ -26,9 +26,9 @@ const App = () => {
     }
     setInventory(bool);
   }
-  function killCow(){
-    collectItems("BeefSteak",1,"Food","Gain Back 10 Health")
-    collectItems("Leather",1,"Crafting Item","")
+  function killDeer(){
+    collectItems({item : "Venison", quantity : 1, type : "Food",description : "Gain Back 10 Health"})
+    collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
   }
 
 
@@ -40,9 +40,9 @@ const App = () => {
         <Content1>
           Action Buttons
           <div>
-          <button onClick={() => collectItems("branch",1,"Crafting Item","")} >Collect Branches</button>
-          <button onClick={() => collectItems("wood",1,"Crafting Item","")}>Collect Wood</button>
-          <button onClick={() => killCow()}>Slay Cow</button>
+          <button onClick={() => collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})}>Collect Branches</button>
+          <button onClick={() => collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})}>Collect Wood</button>
+          <button onClick={() => killDeer()}>Slay Deer</button>
           </div>
         </Content1>
         <Content2>

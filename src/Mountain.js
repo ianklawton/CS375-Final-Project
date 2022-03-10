@@ -35,8 +35,8 @@ const App = () => {
         <Content1>
           Action Buttons
           <div style={{opacity: 1.0}}>
-          <button onClick={() => collectItems("branch")} >Collect Branches</button>
-          <button onClick={() => collectItems("wood")}>Collect Wood</button>
+          <button onClick={() => collectItems("branch")} >Collect Flint</button>
+          <button onClick={() => collectItems("wood")}>Collect Stone</button>
           <button onClick={() => collectItems("...")}>Collect ...</button>
           </div>
         </Content1>
