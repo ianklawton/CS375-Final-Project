@@ -19,7 +19,9 @@ let baseHealth = 100;
 let baseDefense = 0;
 let baseAttack = 2;
 let baseSpeed = 10;
-let baseInventory = {"inventory": []};
+let baseInventory = '[]';
+let activeStats;
+//let activeStats = {"username": 'masen3', "health": 100, "attack": 2, "defense": 0, "speed": 10, "inventory": '[]'};
 
 //Connect to the database
 const Pool = pg.Pool;
@@ -129,8 +131,8 @@ app.post("/signin", function (req, res) {
 							username,
 						])
 							.then(function (response) {
-								let activeStats = {"username": username, "health": response.rows[0].health, "attack": response.rows[0].attack, "defense": response.rows[0].defense, "speed": response.rows[0].speed, "inventory": response.rows[0].inventory};
-								//console.log(activeStats);
+								activeStats = {"username": username, "health": response.rows[0].health, "attack": response.rows[0].attack, "defense": response.rows[0].defense, "speed": response.rows[0].speed, "inventory": response.rows[0].inventory};
+								console.log(activeStats);
 								res.status(200).send({"username": username,"token": true});
 							})
 							.catch(function (error) {
@@ -155,18 +157,21 @@ app.post("/signin", function (req, res) {
 });
 
 app.post("/collect", function (req, res) {
-  let item = req.body.item;
+  let item = req.body;
+  //console.log(item);
   addItem(item);
-  updateData(activeStats);
-}
+  updateData();
+  //console.log(activeStats);
+  //console.log(activeStats.inventory);
+});
 
 app.listen(8080, () => {
     console.log('Listening on port 8080')
 });
 
-function updateData(stats){
+function updateData(){
 	pool.query("UPDATE stats SET health = $1, attack = $2, defense = $3, speed = $4, inventory = $5 WHERE username = $6", [
-        stats.health, stats.attack, stats.defense, stats.speed, stats.inventory, stats.username,
+        activeStats.health, activeStats.attack, activeStats.defense, activeStats.speed, activeStats.inventory, activeStats.username,
     ]).then(function (response) {
 		console.log("Database updated");
 	}).catch(function (error) {
@@ -177,13 +182,16 @@ function updateData(stats){
 function addItem(item){
 	let itemName = item.item;
 	let itemCheck = 0;
-	for (let x = 0; x < activeStats.inventory.length; x++){
-		if (activeStats.inventory[x].hasOwnProperty(itemName)){
-			activeStats.inventory[x].itemName += 1;
+	let tempInv = JSON.parse(activeStats.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item == itemName){
+			tempInv[x].quantity += 1;
 			itemCheck = 1;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 	if (itemCheck === 0){
-		activeStats.inventory.push(item);
+		tempInv.push(item);
+		activeStats.inventory = JSON.stringify(tempInv);
 	}
 }
