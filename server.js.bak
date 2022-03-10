@@ -165,6 +165,10 @@ app.post("/collect", function (req, res) {
   //console.log(activeStats.inventory);
 });
 
+app.get("/caves", function (req, res){
+	// random number to find if fight or mine, if fight generate enemy stats, if mine random number to choose what resorce, send boolean from random number and enemy stats or minable resorce.
+}
+
 app.listen(8080, () => {
     console.log('Listening on port 8080')
 });
@@ -182,18 +186,16 @@ function updateData(){
 function addItem(item){
 	let itemName = item.item;
 	let itemCheck = 0;
-	for (let x = 0; x < activeStats.inventory.length; x++){
-		if (activeStats.inventory[x].item == itemName){
-			activeStats.inventory[x].quantity += 1;
+	let tempInv = JSON.parse(activeStats.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item == itemName){
+			tempInv[x].quantity += 1;
 			itemCheck = 1;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 	if (itemCheck === 0){
-		//console.log(item, "in function");
-		let tempInv = JSON.parse(activeStats.inventory);
-		//console.log(tempInv, "before");
 		tempInv.push(item);
-		//console.log(tempInv, "after");
 		activeStats.inventory = JSON.stringify(tempInv);
 	}
 }

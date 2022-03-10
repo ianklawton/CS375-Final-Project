@@ -165,6 +165,10 @@ app.post("/collect", function (req, res) {
   //console.log(activeStats.inventory);
 });
 
+app.get("/caves", function (req, res){
+	// random number to find if fight or mine, if fight generate enemy stats, if mine random number to choose what resorce, send boolean (under key {"battle": true or false} from random number and enemy stats or minable resorce.
+}
+
 app.listen(8080, () => {
     console.log('Listening on port 8080')
 });
