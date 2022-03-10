@@ -4,7 +4,7 @@ import Text from "./woodsText";
 import Heading from "./TableHead";
 import background from "./Images/Forest.jpg";
 import Inventory from "./Inventory";
-import {collectItems} from "./Inventory";
+import { collectItems } from "./data";
 
 
 
@@ -26,6 +26,10 @@ const App = () => {
     }
     setInventory(bool);
   }
+  function killCow(){
+    collectItems("BeefSteak",1,"Food","Gain Back 10 Health")
+    collectItems("Leather",1,"Crafting Item","")
+  }
 
 
   return (
@@ -35,10 +39,10 @@ const App = () => {
       <ContentBox >
         <Content1>
           Action Buttons
-          <div style={{opacity: 1.0}}>
-          <button onClick={() => collectItems("branch")} >Collect Branches</button>
-          <button onClick={() => collectItems("wood")}>Collect Wood</button>
-          <button onClick={() => collectItems("...")}>Collect ...</button>
+          <div>
+          <button onClick={() => collectItems("branch",1,"Crafting Item","")} >Collect Branches</button>
+          <button onClick={() => collectItems("wood",1,"Crafting Item","")}>Collect Wood</button>
+          <button onClick={() => killCow()}>Slay Cow</button>
           </div>
         </Content1>
         <Content2>
@@ -119,3 +123,5 @@ const Footer = styled.footer`
 `;
 
 export default App;
+//{item: 'Sword', quantity: 1, type: weapon, description: '+10 Attack', attack: 10, speed: 0}
+//{item: 'Shield', quantity: 1, type: 'armour', description: '+4 Defence', defence: 4, speed: -4}
