@@ -1,33 +1,74 @@
+import React, { useState } from "react";
 import "./Home.css";
 import styled from "styled-components";
 import Text from "./caveText";
 import background from "./Images/Cave.jpg";
+import {exploreCave} from "./data"
 
 const App = () => {
+  const [battle, setBattle] = useState(1);
+
+  if (battle === 1){
   return (
+    <div style={{ backgroundImage: `url(${background})` }}>
+    <Container2>
+      <Main> <button onClick={() => setBattle(exploreCave())}>Enter the Cave</button> </Main>
+
+      <SideBar><Text /></SideBar>
+      <Footer>Player Stats</Footer>
+    </Container2>
+    </div>
+  )
+}
+
+  else if (battle.battle){
+    return(
     <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
       <Main>Enemy and Enemy Stats</Main>
       <SideBar><Text /></SideBar>
       <ContentBox>
         <Content1>
-          Action Buttons
-          <div>
-            <button>Attack</button>
-            <button>Heal</button>
-          </div>
         </Content1>
         <Content2>
           Mining Buttons
           <div>
-            <button>Mine</button>
+            <button onClick={() => setBattle(exploreCave())}>Explore Cave</button>
           </div>
         </Content2>
       </ContentBox>
       <Footer>Player Stats</Footer>
     </Container>
     </div>
-  );
+  )
+  }
+  else if (!battle.battle){
+    return (
+      <div style={{ backgroundImage: `url(${background})` }}>
+      <Container>
+        <Main>Enemy and Enemy Stats</Main>
+        <SideBar><Text /></SideBar>
+        <ContentBox>
+          <Content1>
+            Action Buttons
+            <div>
+              <button>Attack</button>
+              <button>Heal</button>
+            </div>
+          </Content1>
+          <Content2>
+            Mining Buttons
+            <div>
+              <button>Mine</button>
+            </div>
+          </Content2>
+        </ContentBox>
+        <Footer>Player Stats</Footer>
+      </Container>
+      </div>
+    );
+  }
+
 };
 
 const Container = styled.div`
@@ -54,9 +95,34 @@ const Container = styled.div`
   }
   color: white;
 `;
+
+const Container2 = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
+  grid-template-areas:
+    "sidebar main main main"
+    "sidebar main main main"
+    "sidebar main main main"
+    "sidebar footer footer footer";
+  text-align: center;
+  grid-gap: 0.25rem;
+  transition: all 0.25s ease-in-out;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-areas:
+      "nav"
+      "sidebar"
+      "main"
+      "content"
+      "footer";
+  }
+  color: white;
+`;
 //background: #1f2128;
 const Main = styled.main`
-  
+
   background-color:rgba(0, 0, 0, 0.5);
   color: white;
   grid-area: main;

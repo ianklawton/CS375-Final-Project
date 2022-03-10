@@ -42,3 +42,14 @@ export function collectItems(t){
     body: JSON.stringify(t)
   })
 }
+
+export function exploreCave(){
+	let object = {battle:false,hello:"hi"};
+	//fetch("http://localhost:8080/cave").then(function (response) {
+	//		return response.json();
+//	}).then(function (data) {
+	//		console.log("Client received from server:", data);
+	//		object = data;
+	//	});
+	return object;
+}
