@@ -32,15 +32,13 @@ export var MountainMessages = [
 	"You are on a mountain",
 ];
 
-export function collectItems(item,quantity,type,description){
+export function collectItems(t){
 
   fetch("http://localhost:8080/collect", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      item: item, quantity: quantity, type: type, description: description
-    })
+    body: JSON.stringify(t)
   })
 }
