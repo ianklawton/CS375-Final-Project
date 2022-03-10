@@ -1,9 +1,11 @@
 import "./Home.css";
 import styled from "styled-components";
 import Text from "./caveText";
+import background from "./Images/Cave.jpg";
 
 const App = () => {
   return (
+    <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
       <Main>Enemy and Enemy Stats</Main>
       <SideBar><Text /></SideBar>
@@ -24,6 +26,7 @@ const App = () => {
       </ContentBox>
       <Footer>Player Stats</Footer>
     </Container>
+    </div>
   );
 };
 
@@ -51,14 +54,17 @@ const Container = styled.div`
   }
   color: white;
 `;
+//background: #1f2128;
 const Main = styled.main`
-  background: #1f2128;
+  
+  background-color:rgba(0, 0, 0, 0.5);
   color: white;
   grid-area: main;
   padding: 0.25rem;
 `;
+//background: #9aaab7;
 const SideBar = styled.div`
-  background: #9aaab7;
+  background: #1f2128;
   grid-area: sidebar;
   padding: 0.25rem;
 `;
@@ -74,15 +80,17 @@ const ContentBox = styled.div`
     flex-direction: column;
   }
 `;
+//background: #a6b8b9;
 const Content1 = styled.div`
-  background: #a6b8b9;
+  background-color:rgba(0, 0, 0, 0.5);
   padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
 const Content2 = styled(Content1)``;
+//background: #ff9637;
 const Footer = styled.footer`
-  background: #ff9637;
+  background-color:rgba(245, 173, 66, 0.5);
   grid-area: footer;
   padding: 0.25rem;
 `;

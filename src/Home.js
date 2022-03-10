@@ -7,6 +7,7 @@ import Heading from "./TableHead";
 import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
+import background from "./Images/Home.jpg";
 
 let bool = false
 let state = "Open Inventory"
@@ -26,6 +27,7 @@ const App = () => {
     setInventory(bool);
   }
   return (
+    <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
       <SideBar>{ht && <Text />}</SideBar>
       <ContentBox>
@@ -49,6 +51,7 @@ const App = () => {
       </ContentBox>
       <Footer>Player Level and Stats</Footer>
     </Container>
+    </div>
   );
 };
 
@@ -85,7 +88,7 @@ const Container = styled.div`
 //   padding: 0.25rem;
 // `;
 const SideBar = styled.div`
-  background: #9aaab7;
+  background: #1f2128;
   grid-area: sidebar;
   padding: 0.25rem;
 `;
@@ -102,14 +105,14 @@ const ContentBox = styled.div`
   }
 `;
 const Content1 = styled.div`
-  background: #a6b8b9;
+  background-color:rgba(0, 0, 0, 0.5);
   padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
 const Content2 = styled(Content1)``;
 const Footer = styled.footer`
-  background: #ff9637;
+  background-color:rgba(245, 173, 66, 0.5);
   grid-area: footer;
   padding: 0.25rem;
 `;

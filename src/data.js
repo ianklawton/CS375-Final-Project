@@ -19,5 +19,13 @@ export var HomeMessages = [
 ];
 
 export var CaveMessages = [
-	"Welcome to the cave",
+	"You are in the caves",
+];
+
+export var WoodsMessages = [
+	"You are in the woods",
+];
+
+export var MountainMessages = [
+	"You are on a mountain",
 ];

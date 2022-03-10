@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Text from "./caveText";
+import Text from "./woodsText";
 import Heading from "./TableHead";
 import background from "./Images/Forest.jpg";
 import Inventory from "./Inventory";
@@ -89,7 +89,7 @@ const Main = styled.main`
   height: 50%;
 `;
 const SideBar = styled.div`
-  background: #9aaab7;
+  background: #1f2128;
   grid-area: sidebar;
   padding: 0.25rem;
 `;
