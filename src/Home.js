@@ -44,9 +44,12 @@ const App = () => {
           <button className="craft" onClick={() => HomeMessages.unshift("Crafted")}>Craft</button>
         </Content1>
         <Content2>
-          {inventoryToggle && <Heading />}
-          {inventoryToggle && <Inventory />}
-          <button onClick={handleClick}>{state}</button>
+          Inventory
+          <div align="center">
+            {inventoryToggle && <Heading />}
+            {inventoryToggle && <Inventory />}
+            <button onClick={handleClick}>{state}</button>
+          </div>
         </Content2>
       </ContentBox>
       <Footer>Player Level and Stats</Footer>
@@ -112,7 +115,7 @@ const Content1 = styled.div`
 `;
 const Content2 = styled(Content1)``;
 const Footer = styled.footer`
-  background-color:rgba(245, 173, 66, 0.5);
+  background: #1f2128;
   grid-area: footer;
   padding: 0.25rem;
 `;

@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
-      <SideBar><Text /></SideBar>
+      <SideBar>{ht && <Text />}</SideBar>
       <ContentBox >
         <Content1>
           Action Buttons
@@ -42,9 +42,11 @@ const App = () => {
         </Content1>
         <Content2>
         Inventory
-        {inventoryToggle && <Heading />}
-        {inventoryToggle && <Inventory />}
-        <button onClick={handleClick}>{state}</button>
+        <div align="center">
+          {inventoryToggle && <Heading />}
+          {inventoryToggle && <Inventory />}
+          <button onClick={handleClick}>{state}</button>
+        </div>
         </Content2>
       </ContentBox>
       <Footer>Player Stats</Footer>
@@ -78,15 +80,15 @@ const Container = styled.div`
   }
   color: white;
 `;
-const Main = styled.main`
-  background: #1f2128;
+// const Main = styled.main`
+//   background: #1f2128;
 
-  color: white;
-  grid-area: main;
-  padding: 0.25rem;
-  width: 100%;
-  height: 50%;
-`;
+//   color: white;
+//   grid-area: main;
+//   padding: 0.25rem;
+//   width: 100%;
+//   height: 50%;
+// `;
 const SideBar = styled.div`
   background: #1f2128;
   grid-area: sidebar;
