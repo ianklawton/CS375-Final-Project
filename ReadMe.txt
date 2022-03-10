@@ -1,5 +1,5 @@
 in github folder:
-  pstg -U postgres -f setUpDatabase.sql - set up database
+  psql -U postgres -f setUpDatabase.sql - set up database
   npm start - run react server
   node server.js - run backend server
 
