@@ -8,13 +8,22 @@ import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
 
-
+let bool = false
+let state = "Open Inventory"
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
-  const ht= useState(true);  
+  const ht= useState(true);
   function handleClick(e) {
     e.preventDefault();
-    setInventory(true);
+    if(bool){
+      bool = false
+      state = "Open Inventory"
+    }
+    else{
+      bool = true
+      state = "Close Inventory"
+    }
+    setInventory(bool);
   }
   return (
     <Container>
@@ -35,7 +44,7 @@ const App = () => {
         <Content2>
           {inventoryToggle && <Heading />}
           {inventoryToggle && <Inventory />}
-          <button onClick={handleClick}>Check Inventory</button>
+          <button onClick={handleClick}>{state}</button>
         </Content2>
       </ContentBox>
       <Footer>Player Level and Stats</Footer>
