@@ -19,7 +19,7 @@ let baseHealth = 100;
 let baseDefense = 0;
 let baseAttack = 2;
 let baseSpeed = 10;
-let baseInventory = {"inventory": ""};
+let baseInventory = {"inventory": []};
 
 //Connect to the database
 const Pool = pg.Pool;
@@ -189,4 +189,13 @@ app.listen(8080, () => {
 function updateData(stats){
 	pool.query("UPDATE stats SET health = $1, attack = $2, defense = $3, speed = $4, inventory = $5 WHERE username = $6", [
         stats.health, stats.attack, stats.defense, stats.speed, stats.inventory, stats.username,
-    ])
+    ]).then(function (response) {
+		console.log("Database updated");
+	}).catch(function (error) {
+		console.log(error);
+	});
+}
+
+function addItem(item){
+	for (let x = 0; x > activeStats.inventory.length; x++){
+		if (activeStats.inventory[x].hasOwnProperty("item")

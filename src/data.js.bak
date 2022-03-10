@@ -3,8 +3,6 @@ export const inventoryData = [
 	{ item: 'Shield', quantity: '1', description: 'Defence'},
 	{ item: 'Hammer', quantity: '1', description: 'Attack'},
 	{ item: 'Armor', quantity: '3', description: 'Defence'},
-	// {item: 'Sword', quantity: 1, type: 'weapon', description: '+10 Attack', attack: 10, speed: 0}
-	// {item: 'Shield', quantity: 1, type: 'armour', description: '+4 Defence', defence: 4, speed: -4}
     ]
 
 export const craftItems = [
