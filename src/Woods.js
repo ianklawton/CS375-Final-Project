@@ -4,7 +4,12 @@ import Text from "./woodsText";
 import Heading from "./TableHead";
 import background from "./Images/Forest.jpg";
 import Inventory from "./Inventory";
-import { collectItems } from "./data";
+import { collectItems, WoodsMessages } from "./data";
+import useSound from 'use-sound';
+import soundUrl from "./Images/woods.mp3";
+import chopping from "./Images/chopping-wood.mp3"; 
+import slaying from "./Images/deer.mp3";
+import gathering from "./Images/branches.mp3"; 
 
 
 
@@ -12,7 +17,13 @@ let bool = false
 let state = "Open Inventory"
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
-  const ht= useState(true);
+  const [ht, setHT]= useState(true);
+ 
+  // Loading Sound Effects
+  const [play, {stop}] = useSound(soundUrl);
+  const [chop] = useSound(chopping);
+  const [slay] = useSound(slaying);
+  const [gather] = useSound(gathering);
 
   function handleClick(e) {
     e.preventDefault();
@@ -26,23 +37,52 @@ const App = () => {
     }
     setInventory(bool);
   }
+  
   function killDeer(){
     collectItems({item : "Venison", quantity : 1, type : "Food",description : "Gain Back 10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
+    WoodsMessages.unshift("The deer was slain, enjoy your trophy");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    stop();
+    slay();
   }
 
+  function collectBranches(){
+    collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
+    WoodsMessages.unshift("You picked up some branches");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    stop();
+    gather();
+  }
+
+  function collectWood(){
+    collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})
+    WoodsMessages.unshift("Chopped up some wood");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    stop();
+    chop();
+  }
 
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
-      <SideBar>{ht && <Text />}</SideBar>
+      <SideBar onMouseEnter={play} onMouseLeave={stop}>{ht && <Text />}</SideBar>
       <ContentBox >
         <Content1>
           Action Buttons
           <div>
-          <button onClick={() => collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})}>Collect Branches</button>
-          <button onClick={() => collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})}>Collect Wood</button>
-          <button onClick={() => killDeer()}>Slay Deer</button>
+          <button onClick={collectBranches}>Collect Branches</button>
+          <button onClick={collectWood}>Collect Wood</button>
+          <button onClick={killDeer}>Slay Deer</button>
           </div>
         </Content1>
         <Content2>

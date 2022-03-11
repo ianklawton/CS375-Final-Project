@@ -9,11 +9,12 @@ import "./Home.css";
 import styled from "styled-components";
 import background from "./Images/Home.jpg";
 
+
 let bool = false
 let state = "Open Inventory"
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
-  const ht= useState(true);
+  const [ht, setHT]= useState(true);
   function handleClick(e) {
     e.preventDefault();
     if(bool){
@@ -26,6 +27,14 @@ const App = () => {
     }
     setInventory(bool);
   }
+  function handleCraft() {
+    HomeMessages.unshift("Crafted");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+ 
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
@@ -41,7 +50,7 @@ const App = () => {
                  <div className="col-md-4"></div>
                </div>
             </div>
-          <button className="craft" onClick={() => HomeMessages.unshift("Crafted")}>Craft</button>
+          <button onClick={handleCraft}>Craft</button>
         </Content1>
         <Content2>
           Inventory

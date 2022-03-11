@@ -4,14 +4,14 @@ import Text from "./mountainText";
 import Heading from "./TableHead";
 import background from "./Images/Mountain.jpg";
 import Inventory from "./Inventory";
-import {collectItems} from "./data";
+import {collectItems, MountainMessages} from "./data";
 
 
 let bool = false
 let state = "Open Inventory"
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
-  const ht= useState(true);
+  const [ht, setHT]= useState(true);
 
   function handleClick(e) {
     e.preventDefault();
@@ -26,6 +26,33 @@ const App = () => {
     setInventory(bool);
   }
 
+  function collectFlint(){
+    collectItems("branch")
+    MountainMessages.unshift("You picked up some flint");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+
+  function collectStone(){
+    collectItems("wood")
+    MountainMessages.unshift("You picked up some stone");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+
+  function collectETC(){
+    collectItems("...")
+    MountainMessages.unshift("You picked up some stuff");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+
 
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
@@ -35,9 +62,9 @@ const App = () => {
         <Content1>
           Action Buttons
           <div style={{opacity: 1.0}}>
-          <button onClick={() => collectItems("branch")} >Collect Flint</button>
-          <button onClick={() => collectItems("wood")}>Collect Stone</button>
-          <button onClick={() => collectItems("...")}>Collect ...</button>
+          <button onClick={collectFlint} >Collect Flint</button>
+          <button onClick={collectStone}>Collect Stone</button>
+          <button onClick={collectETC}>Collect ...</button>
           </div>
         </Content1>
         <Content2>
