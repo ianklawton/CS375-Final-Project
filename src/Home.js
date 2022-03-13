@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Inventory from "./Inventory";
-import Select from 'react-select';
+import Materials from "./material";
+//import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { craftItems, HomeMessages } from './data';
+import { HomeMessages, inventoryData, materials } from './data';
 import Heading from "./TableHead";
+import MaterialHeader from "./MaterialHead";
 import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
@@ -12,9 +14,12 @@ import background from "./Images/Home.jpg";
 
 let bool = false
 let state = "Open Inventory"
+
+let mbool = false
+let mstate = "Show Materials"
+
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
-  const [ht, setHT]= useState(true);
   function handleClick(e) {
     e.preventDefault();
     if(bool){
@@ -27,13 +32,22 @@ const App = () => {
     }
     setInventory(bool);
   }
-  function handleCraft() {
-    HomeMessages.unshift("Crafted");
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
+
+  const [materialToggle, setMaterial] = useState(false);
+  function handleMat(e) {
+    e.preventDefault();
+    if(mbool){
+      mbool = false
+      mstate = "Show Materials"
+    }
+    else{
+      mbool = true
+      mstate = "Hide Materials"
+    }
+    setMaterial(mbool);
   }
+
+  const [ht, setHT]= useState(true);
  
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
@@ -41,16 +55,25 @@ const App = () => {
       <SideBar>{ht && <Text />}</SideBar>
       <ContentBox>
         <Content1>
-          <div className="container">
-               <div className="row">
-                 <div className="col-md-4"></div>
-                 <div className="col-md-4">
-                   <Select options={ craftItems } />
-                 </div>
-                 <div className="col-md-4"></div>
-               </div>
-            </div>
-          <button onClick={handleCraft}>Craft</button>
+          Crafting Area
+          <div align="center">
+            {materialToggle && < MaterialHeader />}
+            {materialToggle && < Materials />}
+            <button onClick={handleMat}>{mstate}</button>
+          </div>
+          
+          <div>
+            <button onClick={handleCraftWS}>Craft Wooden Sword</button>
+            <button onClick={handleCraftMS}>Craft Metal Sword</button>
+            <button onClick={handleCraftWA}>Craft Wooden Armor</button>
+            <button onClick={handleCraftMA}>Craft Metal Armor</button>
+            <button onClick={handleCraftWH}>Craft Wooden Hammer</button>
+            <button onClick={handleCraftMH}>Craft Metal Hammer</button>
+            <button onClick={handleCraftWSh}>Craft Wooden Shield</button>
+            <button onClick={handleCraftMSh}>Craft Metal Shield</button>
+            <button onClick={handleCraftL}>Craft Leather</button>
+            <button onClick={handleCraftF}>Craft Food</button>
+          </div>
         </Content1>
         <Content2>
           Inventory
@@ -65,10 +88,101 @@ const App = () => {
     </Container>
     </div>
   );
+
+  // Crafting functions
+  function handleCraftWS() {
+    HomeMessages.unshift("Crafted a Wooden Sword");
+    materials[0].quantity -= 5;
+    inventoryData[0].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftMS() {
+    HomeMessages.unshift("Crafted a Metal Sword");
+    materials[1].quantity -= 5;
+    inventoryData[6].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftWA() {
+    HomeMessages.unshift("Crafted Wooden Armor");
+    materials[0].quantity -= 5;
+    inventoryData[3].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftMA() {
+    HomeMessages.unshift("Crafted Metal Armor");
+    materials[1].quantity -= 5;
+    inventoryData[5].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftWH() {
+    HomeMessages.unshift("Crafted a Wooden Hammer");
+    materials[0].quantity -= 5;
+    inventoryData[1].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftMH() {
+    HomeMessages.unshift("Crafted a Metal Hammer");
+    materials[1].quantity -= 5;
+    inventoryData[7].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftWSh() {
+    HomeMessages.unshift("Crafted a Wooden Shield");
+    materials[0].quantity -= 5;
+    inventoryData[2].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftMSh() {
+    HomeMessages.unshift("Crafted a Metal Shield");
+    materials[1].quantity -= 5;
+    inventoryData[4].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftL() {
+    HomeMessages.unshift("Crafted Leather");
+    materials[2].quantity -= 5;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+  function handleCraftF() {
+    HomeMessages.unshift("Made some deer meat soup");
+    materials[3].quantity -= 5;
+    inventoryData[8].quantity += 1;
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
 };
 
 
-
+// Styling Info
 const Container = styled.div`
   display: grid;
   height: 100vh;
@@ -128,5 +242,16 @@ const Footer = styled.footer`
   grid-area: footer;
   padding: 0.25rem;
 `;
+
+// Dropdown code
+/* <div className="container">
+               <div className="row">
+                 <div className="col-md-4"></div>
+                 <div className="col-md-4">
+                   <Select options={ craftItems } />
+                 </div>
+                 <div className="col-md-4"></div>
+               </div>
+</div> */
 
 export default App;

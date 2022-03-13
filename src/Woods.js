@@ -4,7 +4,7 @@ import Text from "./woodsText";
 import Heading from "./TableHead";
 import background from "./Images/Forest.jpg";
 import Inventory from "./Inventory";
-import { collectItems, WoodsMessages } from "./data";
+import { collectItems, WoodsMessages, materials } from "./data";
 import useSound from 'use-sound';
 import soundUrl from "./Images/woods.mp3";
 import chopping from "./Images/chopping-wood.mp3"; 
@@ -41,6 +41,8 @@ const App = () => {
   function killDeer(){
     collectItems({item : "Venison", quantity : 1, type : "Food",description : "Gain Back 10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
+    materials[2].quantity += 2;
+    materials[3].quantity += 2;
     WoodsMessages.unshift("The deer was slain, enjoy your trophy");
     setHT(false);
     setTimeout(function(){
@@ -52,6 +54,7 @@ const App = () => {
 
   function collectBranches(){
     collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
+    materials[0].quantity += 1;
     WoodsMessages.unshift("You picked up some branches");
     setHT(false);
     setTimeout(function(){
@@ -63,6 +66,7 @@ const App = () => {
 
   function collectWood(){
     collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})
+    materials[0].quantity += 5;
     WoodsMessages.unshift("Chopped up some wood");
     setHT(false);
     setTimeout(function(){

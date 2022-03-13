@@ -12,6 +12,9 @@ export default function Inventory (){
 				<span>{row.quantity}</span>
 			</td>
 			<td>
+				<span>{row.type}</span>
+			</td>
+			<td>
 				<span>{row.description}</span>
 			</td>
 

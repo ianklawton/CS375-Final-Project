@@ -1,11 +1,22 @@
 export const inventoryData = [
-	{ item: 'Sword', quantity: '2', description: 'Attack'},
-	{ item: 'Shield', quantity: '1', description: 'Defence'},
-	{ item: 'Hammer', quantity: '1', description: 'Attack'},
-	{ item: 'Armor', quantity: '3', description: 'Defence'},
-	// {item: 'Sword', quantity: 1, type: 'weapon', description: '+10 Attack', attack: 10, speed: 0}
-	// {item: 'Shield', quantity: 1, type: 'armour', description: '+4 Defence', defence: 4, speed: -4}
+	{ item: 'Wooden Sword', quantity: 3, type: 'weapon', description: '+5 Attack',attack: 5, speed: 0},
+	{ item: 'Wooden Hammer', quantity: 1, type: 'weapon', description: '+5 Attack', attack: 5, speed: 0},
+	{ item: 'Wooden Shield', quantity: 1, type: 'weapon', description: '+5 Defence', defence: 5, speed: 0},
+	{ item: 'Wooden Armor', quantity: 1, type: 'weapon', description: '+5 Defence', defence: 5, speed: 0},
+	{ item: 'Metal Shield', quantity: 1, type: 'weapon', description: '+10 Defence', defence: 10, speed: 0},
+	{ item: 'Metal Armor', quantity: 3, type: 'weapon', description: '+10 Defence', defence: 10, speed: 0},
+	{item: 'Metal Sword', quantity: 1, type: 'weapon', description: '+10 Attack', attack: 10, speed: 0},
+	{item: 'Metal Hammer', quantity: 1, type: 'weapon', description: '+10 Attack', attack: 10, speed: 0},
+	{item: 'Cooked Deer', quantity: 1, type: 'food', description: '+5 Health', defence: 0, speed: 0, health: 5}
     ]
+
+
+export const materials = [
+	{ mat: "Wood", quantity: 30 },
+	{ mat: "Metal", quantity: 30 },
+	{ mat: "Skin", quantity: 30 },
+	{ mat: "Meat", quantity: 30 },
+];
 
 export const craftItems = [
 	{ label: "Item1", value: 1 },
