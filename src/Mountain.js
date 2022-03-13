@@ -4,26 +4,31 @@ import Text from "./mountainText";
 import Heading from "./TableHead";
 import background from "./Images/Mountain.jpg";
 import Inventory from "./Inventory";
-import {collectItems, MountainMessages} from "./data";
+import soundUrl from "./Images/woods.mp3";
+import slaying from "./Images/deer.mp3";
+import {collectItems, MountainMessages, materials} from "./data";
+import useSound from 'use-sound';
 
-
-let bool = false
-let state = "Open Inventory"
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
+  const [state, setButton] = useState("Open Inventory")
+
+
+  const [play, {stop}] = useSound(soundUrl);
+  const [slay] = useSound(slaying);
 
   function handleClick(e) {
     e.preventDefault();
-    if(bool){
-      bool = false
-      state = "Open Inventory"
+    if(inventoryToggle){
+      setInventory(false)
+      setButton("Open Inventory")
     }
     else{
-      bool = true
-      state = "Close Inventory"
+      setInventory(true)
+      setButton("Close Inventory")
     }
-    setInventory(bool);
+
   }
 
   function collectFlint(){
@@ -36,35 +41,40 @@ const App = () => {
   }
 
   function collectStone(){
-    collectItems("wood")
-    MountainMessages.unshift("You picked up some stone");
+    collectItems("branch")
+    MountainMessages.unshift("You picked up a stone");
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
   }
 
-  function collectETC(){
-    collectItems("...")
-    MountainMessages.unshift("You picked up some stuff");
+  function killGoat(){
+    collectItems({item : "Chevon", quantity : 1, type : "Food",description : "+8 Health"})
+    collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
+    materials[2].quantity += 2;
+    materials[3].quantity += 2;
+    MountainMessages.unshift("The goat was slain, enjoy your trophy");
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    stop();
+    slay();
   }
 
 
   return (
-    <div style={{ backgroundImage: `url(${background})` }}>
+    <div>
     <Container>
       <SideBar>{ht && <Text />}</SideBar>
       <ContentBox >
         <Content1>
           Action Buttons
-          <div style={{opacity: 1.0}}>
+          <div>
           <button onClick={collectFlint} >Collect Flint</button>
           <button onClick={collectStone}>Collect Stone</button>
-          <button onClick={collectETC}>Collect ...</button>
+          <button onClick={killGoat}>Slay Goat</button>
           </div>
         </Content1>
         <Content2>
@@ -83,7 +93,8 @@ const App = () => {
 };
 
 const Container = styled.div`
-
+  background-image: url(${background});
+  background-size: cover;
   display: grid;
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;

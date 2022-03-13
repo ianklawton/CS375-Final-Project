@@ -7,18 +7,18 @@ import Inventory from "./Inventory";
 import { collectItems, WoodsMessages, materials } from "./data";
 import useSound from 'use-sound';
 import soundUrl from "./Images/woods.mp3";
-import chopping from "./Images/chopping-wood.mp3"; 
+import chopping from "./Images/chopping-wood.mp3";
 import slaying from "./Images/deer.mp3";
-import gathering from "./Images/branches.mp3"; 
+import gathering from "./Images/branches.mp3";
 
 
 
-let bool = false
-let state = "Open Inventory"
+
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
- 
+  const [state, setButton] = useState("Open Inventory")
+
   // Loading Sound Effects
   const [play, {stop}] = useSound(soundUrl);
   const [chop] = useSound(chopping);
@@ -27,19 +27,19 @@ const App = () => {
 
   function handleClick(e) {
     e.preventDefault();
-    if(bool){
-      bool = false
-      state = "Open Inventory"
+    if(inventoryToggle){
+      setInventory(false)
+      setButton("Open Inventory")
     }
     else{
-      bool = true
-      state = "Close Inventory"
+      setInventory(true)
+      setButton("Close Inventory")
     }
-    setInventory(bool);
+
   }
-  
+
   function killDeer(){
-    collectItems({item : "Venison", quantity : 1, type : "Food",description : "Gain Back 10 Health"})
+    collectItems({item : "Venison", quantity : 1, type : "Food",description : "+10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
     materials[2].quantity += 2;
     materials[3].quantity += 2;
@@ -77,10 +77,10 @@ const App = () => {
   }
 
   return (
-    <div style={{ backgroundImage: `url(${background})` }}>
+    <div>
     <Container>
       <SideBar onMouseEnter={play} onMouseLeave={stop}>{ht && <Text />}</SideBar>
-      <ContentBox >
+      <ContentBox>
         <Content1>
           Action Buttons
           <div>
@@ -110,6 +110,9 @@ const App = () => {
 
 const Container = styled.div`
 
+
+  background-image: url(${background});
+  background-size: cover;
   display: grid;
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
@@ -173,5 +176,3 @@ const Footer = styled.footer`
 `;
 
 export default App;
-//{item: 'Sword', quantity: 1, type: weapon, description: '+10 Attack', attack: 10, speed: 0}
-//{item: 'Shield', quantity: 1, type: 'armour', description: '+4 Defence', defence: 4, speed: -4}

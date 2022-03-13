@@ -2,49 +2,92 @@ import React, { useState } from "react";
 import "./Home.css";
 import styled from "styled-components";
 import Text from "./caveText";
+import Heading from "./TableHead";
+import Inventory from "./Inventory";
 import background from "./Images/Cave.jpg";
 import {exploreCave} from "./data"
+import {collectItems} from "./data"
+
+function collectOre(){
+  collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
+  //CaveMessages.unshift("You mined some ore");
+  //setHT(false);
+  setTimeout(function(){
+    //setHT(true)
+  }.bind(),0.5);
+  //stop();
+  //gather();
+}
+
 
 const App = () => {
-  const [battle, setBattle] = useState(1);
+  const [inventoryToggle, setInventory] = useState(false);
+  const [ht, setHT]= useState(true);
+  const [state, setButton] = useState("Open Inventory")
+  const [battle, setBattle] = useState("Start");
 
-  if (battle === 1){
+  async function resolvePromise(){
+    let jsonData = await exploreCave();
+    setBattle(jsonData)
+
+  }
+
+  function handleClick(e) {
+    e.preventDefault();
+    if(inventoryToggle){
+      setInventory(false)
+      setButton("Open Inventory")
+    }
+    else{
+      setInventory(true)
+      setButton("Close Inventory")
+    }
+
+  }
+
+  if (battle === "Start"){
   return (
-    <div style={{ backgroundImage: `url(${background})` }}>
-    <Container2>
-      <Main> <button onClick={() => setBattle(exploreCave())}>Enter the Cave</button> </Main>
+    <div>
+    <Container3>
+      <Main> <button onClick={() => resolvePromise()}>Enter the Cave</button> </Main>
 
       <SideBar><Text /></SideBar>
       <Footer>Player Stats</Footer>
-    </Container2>
+    </Container3>
     </div>
   )
 }
 
-  else if (battle.battle){
+  else if (!battle.battle){
+    console.log(battle)
     return(
-    <div style={{ backgroundImage: `url(${background})` }}>
-    <Container>
-      <Main>Enemy and Enemy Stats</Main>
+    <div>
+    <Container2>
       <SideBar><Text /></SideBar>
-      <ContentBox>
+      <ContentBox >
         <Content1>
-        </Content1>
-        <Content2>
           Mining Buttons
           <div>
-            <button onClick={() => setBattle(exploreCave())}>Explore Cave</button>
+          <button onClick={() => collectOre(battle.ore)}>Collect {battle.ore}</button>
           </div>
+        </Content1>
+        <Content2>
+        Inventory
+        <div align ="center">
+          {inventoryToggle && <Heading />}
+          {inventoryToggle && <Inventory />}
+        <button onClick={handleClick}>{state}</button>
+        </div>
         </Content2>
       </ContentBox>
       <Footer>Player Stats</Footer>
-    </Container>
+    </Container2>
     </div>
   )
   }
-  else if (!battle.battle){
+  else if (battle.battle){
     return (
-      <div style={{ backgroundImage: `url(${background})` }}>
+      <div>
       <Container>
         <Main>Enemy and Enemy Stats</Main>
         <SideBar><Text /></SideBar>
@@ -53,15 +96,11 @@ const App = () => {
             Action Buttons
             <div>
               <button>Attack</button>
+              <button>Defend</button>
               <button>Heal</button>
+              <p>IF YOU WANNA RUN FROM BATTLE,GO TO ONE OF THE OTHER LOCATIONS</p>
             </div>
           </Content1>
-          <Content2>
-            Mining Buttons
-            <div>
-              <button>Mine</button>
-            </div>
-          </Content2>
         </ContentBox>
         <Footer>Player Stats</Footer>
       </Container>
@@ -72,6 +111,8 @@ const App = () => {
 };
 
 const Container = styled.div`
+  background-image: url(${background});
+  background-size: cover;
   display: grid;
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
@@ -97,6 +138,34 @@ const Container = styled.div`
 `;
 
 const Container2 = styled.div`
+  background-image: url(${background});
+  background-size: cover;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
+  grid-template-areas:
+    "sidebar content content content"
+    "sidebar content content content"
+    "sidebar content content content"
+    "sidebar footer footer footer";
+  text-align: center;
+  grid-gap: 0.25rem;
+  transition: all 0.25s ease-in-out;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-areas:
+      "nav"
+      "sidebar"
+      "main"
+      "content"
+      "footer";
+  }
+  color: white;
+`;
+const Container3 = styled.div`
+  background-image: url(${background});
+  background-size: cover;
   display: grid;
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
@@ -156,7 +225,7 @@ const Content1 = styled.div`
 const Content2 = styled(Content1)``;
 //background: #ff9637;
 const Footer = styled.footer`
-  background-color:rgba(245, 173, 66, 0.5);
+  background: #1f2128;;
   grid-area: footer;
   padding: 0.25rem;
 `;

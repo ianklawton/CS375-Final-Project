@@ -48,7 +48,7 @@ const App = () => {
   }
 
   const [ht, setHT]= useState(true);
- 
+
   return (
     <div style={{ backgroundImage: `url(${background})` }}>
     <Container>
@@ -61,7 +61,7 @@ const App = () => {
             {materialToggle && < Materials />}
             <button onClick={handleMat}>{mstate}</button>
           </div>
-          
+
           <div>
             <button onClick={handleCraftWS}>Craft Wooden Sword</button>
             <button onClick={handleCraftMS}>Craft Metal Sword</button>
@@ -184,6 +184,8 @@ const App = () => {
 
 // Styling Info
 const Container = styled.div`
+  background-image: url(${background});
+  background-size: cover;
   display: grid;
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
