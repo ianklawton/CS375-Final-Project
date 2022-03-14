@@ -180,7 +180,7 @@ app.get("/cave", function (req, res){
   deter = Math.floor(Math.random() * 9)
 
   if(deter <= 2){
-    res.json({battle : false, ore: ores[Math.floor(Math.random() * 2)]})
+    res.json({battle : false, ore: ores[Math.floor(Math.random() * 3)]})
   }
   else{
     res.json({battle : true, monster : monsters[Math.floor(Math.random() * 4)], attack : Math.floor(Math.random() * 60), defense : Math.floor(Math.random() * 60), speed : Math.floor(Math.random() * 60)})

@@ -12,7 +12,9 @@ import goblin from "./Images/Goblin.png";
 import dragon from "./Images/Dragon.png";
 import {exploreCave} from "./data"
 import {getActiveStats} from "./data"
+import {setActiveStats} from "./data"
 import {collectItems} from "./data"
+import {battleSequence} from "./Combat"
 
 
 function collectOre(){
@@ -28,6 +30,8 @@ function collectOre(){
 
 
 const App = () => {
+
+  const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
@@ -35,15 +39,34 @@ const App = () => {
   const [stats, setStats] = useState(getStats())
 
   async function resolvePromise(){
-    let jsonData = await exploreCave();
-    setBattle(jsonData)
+      let jsonData = await exploreCave();
+      setBattle(jsonData)
+
+
 
   }
 
   async function getStats(){
+    if(bool){
+    setBool(false);
     let jsonData = await getActiveStats();
     setStats(jsonData);
 
+  }
+
+  }
+
+  function updateBattle(player,enemy,action){
+    console.log("hi")
+    let new_user, new_enemy = battleSequence(player,enemy,action);
+    console.log(new_user)
+    console.log(new_enemy)
+    //if (player.health <= 0)
+
+    //setStats(new_user)
+    //setActiveStats(new_user)
+    //setBattle(new_enemy)
+    //setBool(true)
   }
 
 
@@ -128,7 +151,7 @@ const App = () => {
         <img src= {enemy}/>
         </div>
         <div>
-        Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
+        Enemy: {battle.monster} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
         </div>
         </Main>
         <SideBar><Text /></SideBar>
@@ -136,10 +159,9 @@ const App = () => {
           <Content1>
             Action Buttons
             <div>
-              <button>Attack</button>
-              <button>Defend</button>
-              <button>Heal</button>
-
+              <button onClick={() => updateBattle(stats, battle, "attack")}>Attack</button>
+              <button onClick={() => updateBattle(stats, battle, "defend")}>Defend</button>
+              <button onClick={() => updateBattle(stats, battle, "heal")}>Heal</button>
               <p>IF YOU WANNA RUN FROM BATTLE,GO TO ONE OF THE OTHER LOCATIONS</p>
             </div>
           </Content1>
