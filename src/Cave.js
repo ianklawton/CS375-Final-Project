@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import "./Home.css";
+import "./Cave.css";
 import styled from "styled-components";
 import Text from "./caveText";
 import Heading from "./TableHead";
 import Inventory from "./Inventory";
 import background from "./Images/Cave.jpg";
+import witch from "./Images/Witch.png";
+import skeleton from "./Images/Skeleton.png";
+import goblin from "./Images/Goblin.png";
+import dragon from "./Images/Dragon.png";
 import {exploreCave} from "./data"
 import {collectItems} from "./data"
+
 
 function collectOre(){
   collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
@@ -67,7 +73,7 @@ const App = () => {
       <ContentBox >
         <Content1>
           Mining Buttons
-          <div>
+          <div class= 'enemy'>
           <button onClick={() => collectOre(battle.ore)}>Collect {battle.ore}</button>
           </div>
         </Content1>
@@ -86,10 +92,33 @@ const App = () => {
   )
   }
   else if (battle.battle){
+    let enemy;
+    if (battle.monster == "Goblin"){
+      enemy = goblin;
+    }
+    else if (battle.monster == "Dragon"){
+      enemy = dragon;
+    }
+    else if (battle.monster == "Skeleton"){
+      enemy = skeleton;
+    }
+    else if (battle.monster == "Witch"){
+      enemy = witch;
+    }
     return (
       <div>
       <Container>
-        <Main>Enemy and Enemy Stats</Main>
+        <Main>
+        <div>
+        Enemy and Enemy Stats
+        </div>
+        <div>
+        <img src= {enemy}/>
+        </div>
+        <div>
+        Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
+        </div>
+        </Main>
         <SideBar><Text /></SideBar>
         <ContentBox>
           <Content1>
@@ -98,6 +127,7 @@ const App = () => {
               <button>Attack</button>
               <button>Defend</button>
               <button>Heal</button>
+
               <p>IF YOU WANNA RUN FROM BATTLE,GO TO ONE OF THE OTHER LOCATIONS</p>
             </div>
           </Content1>
@@ -190,7 +220,7 @@ const Container3 = styled.div`
   color: white;
 `;
 //background: #1f2128;
-const Main = styled.main`
+const Main = styled.div`
 
   background-color:rgba(0, 0, 0, 0.5);
   color: white;
