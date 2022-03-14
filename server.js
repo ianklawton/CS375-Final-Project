@@ -165,6 +165,14 @@ app.post("/collect", function (req, res) {
   //console.log(activeStats.inventory);
 });
 
+app.get("/stats", function (req, res){
+  res.json(activeStats);
+});
+
+app.post("/stats", function (req, res){
+    updateData();
+});
+
 app.get("/cave", function (req, res){
   monsters=['Goblin','Witch','Skeleton','Dragon']
   ores=["Copper","Iron","Titanium"]

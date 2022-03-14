@@ -66,3 +66,24 @@ export function exploreCave(){
 	)
 
 }
+
+export function getActiveStats(){
+	return(fetch("http://localhost:8080/stats").then(function (response) {
+			return response.json();
+	}).then(function (data){
+		console.log(data)
+		return data;
+
+	})
+	)
+}
+
+export function setActiveStats(stats){
+		fetch("http://localhost:8080/collect", {
+	    method: "POST",
+	    headers: {
+	      "Content-Type": "application/json"
+	    },
+	    body: JSON.stringify(stats)
+	  })
+}

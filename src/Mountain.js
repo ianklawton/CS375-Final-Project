@@ -8,12 +8,13 @@ import soundUrl from "./Images/woods.mp3";
 import slaying from "./Images/deer.mp3";
 import {collectItems, MountainMessages, materials} from "./data";
 import useSound from 'use-sound';
+import {getActiveStats} from "./data"
 
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
-
+  const [stats, setStats] = useState(getStats())
 
   const [play, {stop}] = useSound(soundUrl);
   const [slay] = useSound(slaying);
@@ -29,6 +30,11 @@ const App = () => {
       setButton("Close Inventory")
     }
 
+  }
+
+  async function getStats(){
+    let jsonData = await getActiveStats();
+    setStats(jsonData);
   }
 
   function collectFlint(){
@@ -86,7 +92,9 @@ const App = () => {
         </div>
         </Content2>
       </ContentBox>
-      <Footer>Player Stats</Footer>
+      <Footer>Player Stats
+        <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+      </Footer>
     </Container>
     </div>
   );
@@ -152,7 +160,7 @@ const Content1 = styled.div`
 `;
 const Content2 = styled(Content1)``;
 const Footer = styled.footer`
-  background-color:rgba(245, 173, 66, 0.5);
+  background: #1f2128;
   grid-area: footer;
   padding: 0.25rem;
 `;

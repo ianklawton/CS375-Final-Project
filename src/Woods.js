@@ -10,7 +10,7 @@ import soundUrl from "./Images/woods.mp3";
 import chopping from "./Images/chopping-wood.mp3";
 import slaying from "./Images/deer.mp3";
 import gathering from "./Images/branches.mp3";
-
+import {getActiveStats} from "./data"
 
 
 
@@ -18,7 +18,7 @@ const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
-
+  const [stats, setStats] = useState(getStats())
   // Loading Sound Effects
   const [play, {stop}] = useSound(soundUrl);
   const [chop] = useSound(chopping);
@@ -35,6 +35,12 @@ const App = () => {
       setInventory(true)
       setButton("Close Inventory")
     }
+
+  }
+
+  async function getStats(){
+    let jsonData = await getActiveStats();
+    setStats(jsonData);
 
   }
 
@@ -99,9 +105,8 @@ const App = () => {
         </Content2>
       </ContentBox>
       <Footer>
-        <div style={{opacity: 1.0}}>
           Player Stats
-        </div>
+          <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
       </Footer>
     </Container>
     </div>

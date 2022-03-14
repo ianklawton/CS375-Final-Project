@@ -10,7 +10,7 @@ import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
 import background from "./Images/Home.jpg";
-
+import {getActiveStats} from "./data"
 
 let bool = false
 let state = "Open Inventory"
@@ -20,6 +20,7 @@ let mstate = "Show Materials"
 
 const App = () => {
   const [inventoryToggle, setInventory] = useState(false);
+  const [stats, setStats] = useState(getStats())
   function handleClick(e) {
     e.preventDefault();
     if(bool){
@@ -32,6 +33,13 @@ const App = () => {
     }
     setInventory(bool);
   }
+
+  async function getStats(){
+    let jsonData = await getActiveStats();
+    setStats(jsonData);
+
+  }
+
 
   const [materialToggle, setMaterial] = useState(false);
   function handleMat(e) {
@@ -84,7 +92,9 @@ const App = () => {
           </div>
         </Content2>
       </ContentBox>
-      <Footer>Player Level and Stats</Footer>
+      <Footer>Player Stats
+      <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+      </Footer>
     </Container>
     </div>
   );

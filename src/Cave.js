@@ -11,6 +11,7 @@ import skeleton from "./Images/Skeleton.png";
 import goblin from "./Images/Goblin.png";
 import dragon from "./Images/Dragon.png";
 import {exploreCave} from "./data"
+import {getActiveStats} from "./data"
 import {collectItems} from "./data"
 
 
@@ -31,12 +32,20 @@ const App = () => {
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
   const [battle, setBattle] = useState("Start");
+  const [stats, setStats] = useState(getStats())
 
   async function resolvePromise(){
     let jsonData = await exploreCave();
     setBattle(jsonData)
 
   }
+
+  async function getStats(){
+    let jsonData = await getActiveStats();
+    setStats(jsonData);
+
+  }
+
 
   function handleClick(e) {
     e.preventDefault();
@@ -58,7 +67,9 @@ const App = () => {
       <Main> <button onClick={() => resolvePromise()}>Enter the Cave</button> </Main>
 
       <SideBar><Text /></SideBar>
-      <Footer>Player Stats</Footer>
+      <Footer>Player Stats
+      <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+      </Footer>
     </Container3>
     </div>
   )
@@ -86,7 +97,8 @@ const App = () => {
         </div>
         </Content2>
       </ContentBox>
-      <Footer>Player Stats</Footer>
+      <Footer>Player Stats
+      <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div></Footer>
     </Container2>
     </div>
   )
@@ -132,7 +144,9 @@ const App = () => {
             </div>
           </Content1>
         </ContentBox>
-        <Footer>Player Stats</Footer>
+        <Footer>Player Stats
+        <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+        </Footer>
       </Container>
       </div>
     );
