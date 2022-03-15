@@ -4,9 +4,9 @@ import Text from "./mountainText";
 import Heading from "./TableHead";
 import background from "./Images/Mountain.jpg";
 import Inventory from "./Inventory";
-import soundUrl from "./Images/woods.mp3";
 import slaying from "./Images/deer.mp3";
-import {collectItems, MountainMessages, materials} from "./data";
+import stoning from "./Images/stones.mp3";
+import {collectItems, MountainMessages} from "./data";
 import useSound from 'use-sound';
 import {getActiveStats} from "./data"
 
@@ -17,8 +17,8 @@ const App = () => {
   const [state, setButton] = useState("Open Inventory")
   const [stats, setStats] = useState(getStats())
 
-  const [play, {stop}] = useSound(soundUrl);
   const [slay] = useSound(slaying);
+  const [stone] = useSound(stoning);
 
   function handleClick(e) {
     e.preventDefault();
@@ -41,35 +41,32 @@ const App = () => {
   }
   }
 
-  function collectFlint(){
-    collectItems("branch")
-    MountainMessages.unshift("You picked up some flint");
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-  }
+  // function collectFlint(){
+  //   collectItems("branch")
+  //   MountainMessages.unshift("You picked up some flint");
+  //   setHT(false);
+  //   setTimeout(function(){
+  //     setHT(true)
+  //   }.bind(),0.5);
+  // }
 
   function collectStone(){
-    collectItems("branch")
+    collectItems({item : "Stone", quantity : 1, type : "Crafting Item",description : ""})
     MountainMessages.unshift("You picked up a stone");
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    stone();
   }
 
   function killGoat(){
     collectItems({item : "Chevon", quantity : 1, type : "Food",description : "+8 Health"})
-    collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
-    materials[2].quantity += 2;
-    materials[3].quantity += 2;
     MountainMessages.unshift("The goat was slain, enjoy your trophy");
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
-    stop();
     slay();
   }
 
@@ -82,7 +79,6 @@ const App = () => {
         <Content1>
           Action Buttons
           <div>
-          <button onClick={collectFlint} >Collect Flint</button>
           <button onClick={collectStone}>Collect Stone</button>
           <button onClick={killGoat}>Slay Goat</button>
           </div>

@@ -10,24 +10,13 @@ import witch from "./Images/Witch.png";
 import skeleton from "./Images/Skeleton.png";
 import goblin from "./Images/Goblin.png";
 import dragon from "./Images/Dragon.png";
-import {exploreCave} from "./data"
-import {getActiveStats} from "./data"
-import {setActiveStats} from "./data"
-import {collectItems} from "./data"
-import {battleSequence} from "./Combat"
-
-
-function collectOre(){
-  collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
-  //CaveMessages.unshift("You mined some ore");
-  //setHT(false);
-  setTimeout(function(){
-    //setHT(true)
-  }.bind(),0.5);
-  //stop();
-  //gather();
-}
-
+import {exploreCave, CaveMessages} from "./data";
+import {getActiveStats} from "./data";
+import {setActiveStats} from "./data";
+import {collectItems} from "./data";
+import {battleSequence} from "./Combat";
+import useSound from 'use-sound';
+import mining from "./Images/stones.mp3";
 
 const App = () => {
 
@@ -36,7 +25,8 @@ const App = () => {
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
   const [battle, setBattle] = useState("Start");
-  const [stats, setStats] = useState(getStats())
+  const [stats, setStats] = useState(getStats());
+  const [mine] = useSound(mining);
 
   async function resolvePromise(){
       let jsonData = await exploreCave();
@@ -44,6 +34,15 @@ const App = () => {
 
 
 
+  }
+
+  function collectOre(){
+    collectItems({item : "Metal", quantity : 1, type : "Crafting Item",description : "metal from iron ore"})
+    CaveMessages.unshift("You mined some ore");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
   }
 
   async function getStats(){
@@ -105,7 +104,7 @@ function page(){
     return(
     <div>
     <Container2>
-      <SideBar><Text /></SideBar>
+      <SideBar>{ht && <Text />}</SideBar>
       <ContentBox >
         <Content1>
           Mining Buttons

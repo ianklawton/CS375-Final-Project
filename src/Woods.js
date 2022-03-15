@@ -6,10 +6,8 @@ import background from "./Images/Forest.jpg";
 import Inventory from "./Inventory";
 import { collectItems, WoodsMessages, materials } from "./data";
 import useSound from 'use-sound';
-import soundUrl from "./Images/woods.mp3";
 import chopping from "./Images/chopping-wood.mp3";
 import slaying from "./Images/deer.mp3";
-import gathering from "./Images/branches.mp3";
 import {getActiveStats} from "./data"
 
 
@@ -18,13 +16,13 @@ const App = () => {
   const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
-  const [state, setButton] = useState("Open Inventory")
-  const [stats, setStats] = useState(getStats())
+  const [state, setButton] = useState("Open Inventory");
+  const [stats, setStats] = useState(getStats());
+
+
   // Loading Sound Effects
-  const [play, {stop}] = useSound(soundUrl);
   const [chop] = useSound(chopping);
   const [slay] = useSound(slaying);
-  const [gather] = useSound(gathering);
 
   function handleClick(e) {
     e.preventDefault();
@@ -58,21 +56,20 @@ const App = () => {
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
-    stop();
     slay();
   }
 
-  function collectBranches(){
-    collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
-    materials[0].quantity += 1;
-    WoodsMessages.unshift("You picked up some branches");
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    stop();
-    gather();
-  }
+  // function collectBranches(){
+  //   collectItems({item : "Branch", quantity : 1, type : "Crafting Item",description : ""})
+  //   materials[0].quantity += 1;
+  //   WoodsMessages.unshift("You picked up some branches");
+  //   setHT(false);
+  //   setTimeout(function(){
+  //     setHT(true)
+  //   }.bind(),0.5);
+  //   stop();
+  //   gather();
+  // }
 
   function collectWood(){
     collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})
@@ -82,19 +79,17 @@ const App = () => {
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
-    stop();
     chop();
   }
 
   return (
     <div>
     <Container>
-      <SideBar onMouseEnter={play} onMouseLeave={stop}>{ht && <Text />}</SideBar>
+      <SideBar>{ht && <Text />}</SideBar>
       <ContentBox>
         <Content1>
           Action Buttons
           <div>
-          <button onClick={collectBranches}>Collect Branches</button>
           <button onClick={collectWood}>Collect Wood</button>
           <button onClick={killDeer}>Slay Deer</button>
           </div>

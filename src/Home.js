@@ -10,9 +10,9 @@ import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
 import background from "./Images/Home.jpg";
-import {getActiveStats} from "./data"
+import {getActiveStats} from "./data";
 
-let bool = false
+let ibool = false;
 let state = "Open Inventory"
 
 let mbool = false
@@ -21,18 +21,20 @@ let mstate = "Show Materials"
 const App = () => {
   const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
-  const [stats, setStats] = useState(getStats())
+  const [stats, setStats] = useState(getStats());
+  const [state, setButton] = useState("Open Inventory");
+
   function handleClick(e) {
     e.preventDefault();
-    if(bool){
-      bool = false
-      state = "Open Inventory"
+    if(inventoryToggle){
+      setInventory(false)
+      setButton("Open Inventory")
     }
     else{
-      bool = true
-      state = "Close Inventory"
+      setInventory(true)
+      setButton("Close Inventory")
     }
-    setInventory(bool);
+
   }
 
   async function getStats(){
@@ -40,9 +42,28 @@ const App = () => {
     setBool(false);
     let jsonData = await getActiveStats();
     setStats(jsonData);
+    //inventoryData.push({stats.inventory})
   }
 
   }
+
+  // function matsTable(){
+  //   tablerow = {stats.inventory}.map((row) =>
+	// 	<tr>
+	// 		<td>
+	// 			<span>{row.item}</span>
+	// 		</td>
+	// 		<td>
+	// 			<span>{row.quantity}</span>
+	// 		</td>
+	// 		<td>
+	// 			<span>{row.type}</span>
+	// 		</td>
+	// 		<td>
+	// 			<span>{row.description}</span>
+	// 		</td>
+	// 	</tr>);
+  // }
 
 
   const [materialToggle, setMaterial] = useState(false);
@@ -93,6 +114,7 @@ const App = () => {
             {inventoryToggle && <Heading />}
             {inventoryToggle && <Inventory />}
             <button onClick={handleClick}>{state}</button>
+            {stats.inventory}
           </div>
         </Content2>
       </ContentBox>
