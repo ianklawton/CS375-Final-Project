@@ -56,23 +56,19 @@ const App = () => {
 
   }
 
-  function updateBattle(player,enemy,action){
+  async function updateBattle(player,enemy,action){
     let new_user;
     let new_enemy;
     let temp;
-    console.log("hi")
-    temp = battleSequence(player,enemy,action);
-    console.log(temp)
+    temp = await battleSequence(player,enemy,action);
     new_user = temp[0]
     new_enemy = temp[1]
-    console.log(new_enemy)
-    //if (player.health <= 0)
 
+    setStats({this: "re-render"})
     setStats(new_user)
-    setActiveStats(new_user)
+    setBattle({this: "re-render"})
     setBattle(new_enemy)
-    console.log(battle)
-
+    setActiveStats(new_user)
   }
 
 
@@ -88,7 +84,7 @@ const App = () => {
     }
 
   }
-
+function page(){
   if (battle === "Start"){
   return (
     <div>
@@ -181,6 +177,12 @@ const App = () => {
       </div>
     );
   }
+
+}
+return (
+  page()
+);
+
 
 };
 

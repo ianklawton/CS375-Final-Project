@@ -44,6 +44,7 @@ const App = () => {
     setBool(false);
     let jsonData = await getActiveStats();
     setStats(jsonData);
+    console.log(jsonData)
   }
   }
 
