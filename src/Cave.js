@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Text from "./caveText";
 import Heading from "./TableHead";
 import Inventory from "./Inventory";
+import { useNavigate } from "react-router-dom";
 import background from "./Images/Cave.jpg";
 import witch from "./Images/Witch.png";
 import skeleton from "./Images/Skeleton.png";
@@ -28,16 +29,23 @@ const App = () => {
   const [stats, setStats] = useState(getStats());
   const [mine] = useSound(mining);
 
+  let navigate = useNavigate();
+  const routeChange = () =>{
+    let path = `../`;
+    navigate(path);
+    let new_stats = stats;
+    new_stats.health = 50;
+    setActiveStats(new_stats);
+  }
+
   async function resolvePromise(){
       let jsonData = await exploreCave();
       setBattle(jsonData)
 
-
-
   }
 
   function collectOre(){
-    collectItems({item : "Metal", quantity : 1, type : "Crafting Item",description : "metal from iron ore"})
+    collectItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "metal from iron ore"})
     CaveMessages.unshift("You mined some ore");
     setHT(false);
     setTimeout(function(){
@@ -100,10 +108,10 @@ function page(){
 }
 
   else if (!battle.battle){
-
     return(
     <div>
     <Container2>
+      <Main><button onClick={() => resolvePromise()}>Explore the Cave Further</button> </Main>
       <SideBar>{ht && <Text />}</SideBar>
       <ContentBox >
         <Content1>
@@ -128,9 +136,7 @@ function page(){
   )
   }
   else if (battle.battle){
-    console.log(battle)
     let enemy;
-    battle.defense = 0;
     if (battle.monster == "Goblin"){
       enemy = goblin;
     }
@@ -143,38 +149,90 @@ function page(){
     else if (battle.monster == "Witch"){
       enemy = witch;
     }
-    return (
-      <div>
-      <Container>
-        <Main>
+    if (stats.health <= 0){
+      return (
         <div>
-        Enemy and Enemy Stats
+        <Container>
+          <Main>
+          <div>
+          You Win!
+          </div>
+          </Main>
+          <SideBar><Text /></SideBar>
+          <ContentBox>
+            <Content1>
+              <div>
+                <Main><button onClick={() => resolvePromise()}>Explore the Cave Further</button> </Main>
+              </div>
+            </Content1>
+          </ContentBox>
+          <Footer>Player Stats
+          <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+          </Footer>
+        </Container>
         </div>
+      );
+    }
+    else if (stats.health >= 0 && enemy.health <=0){
+      return (
         <div>
-        <img src= {enemy}/>
+        <Container>
+          <Main>
+          <div>
+          You Win!
+          </div>
+          </Main>
+          <SideBar><Text /></SideBar>
+          <ContentBox>
+            <Content1>
+              Action Buttons
+              <div>
+                <button onClick={routeChange}>Go Home and Recover</button>
+              </div>
+            </Content1>
+          </ContentBox>
+          <Footer>Player Stats
+          <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+          </Footer>
+        </Container>
         </div>
+      );
+    }
+    else{
+      return (
         <div>
-        Enemy: {battle.monster} Health: {battle.health} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
+        <Container>
+          <Main>
+          <div>
+          Enemy and Enemy Stats
+          </div>
+          <div>
+          <img src= {enemy}/>
+          </div>
+          <div>
+          Enemy: {battle.monster} Health: {battle.health} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
+          </div>
+          </Main>
+          <SideBar><Text /></SideBar>
+          <ContentBox>
+            <Content1>
+              Action Buttons
+              <div>
+                <button onClick={() => updateBattle(stats, battle, "attack")}>Attack</button>
+                <button onClick={() => updateBattle(stats, battle, "defend")}>Defend</button>
+                <button onClick={() => updateBattle(stats, battle, "heal")}>Heal</button>
+                <p>IF YOU WANNA RUN FROM BATTLE,GO TO ONE OF THE OTHER LOCATIONS</p>
+              </div>
+            </Content1>
+          </ContentBox>
+          <Footer>Player Stats
+          <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
+          </Footer>
+        </Container>
         </div>
-        </Main>
-        <SideBar><Text /></SideBar>
-        <ContentBox>
-          <Content1>
-            Action Buttons
-            <div>
-              <button onClick={() => updateBattle(stats, battle, "attack")}>Attack</button>
-              <button onClick={() => updateBattle(stats, battle, "defend")}>Defend</button>
-              <button onClick={() => updateBattle(stats, battle, "heal")}>Heal</button>
-              <p>IF YOU WANNA RUN FROM BATTLE,GO TO ONE OF THE OTHER LOCATIONS</p>
-            </div>
-          </Content1>
-        </ContentBox>
-        <Footer>Player Stats
-        <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
-        </Footer>
-      </Container>
-      </div>
-    );
+      );
+    }
+
   }
 
 }
@@ -219,7 +277,7 @@ const Container2 = styled.div`
   height: 100vh;
   grid-template-rows: 0.2fr 1fr 0.5fr 0.5fr;
   grid-template-areas:
-    "sidebar content content content"
+    "sidebar main main main"
     "sidebar content content content"
     "sidebar content content content"
     "sidebar footer footer footer";

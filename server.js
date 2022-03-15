@@ -176,12 +176,12 @@ app.post("/setStats", function (req, res){
 
 app.get("/cave", function (req, res){
   monsters=['Goblin','Witch','Skeleton','Dragon']
-  ores=["Copper","Iron","Titanium"]
+
 
   deter = Math.floor(Math.random() * 9)
 
   if(deter <= 2){
-    res.json({battle : false, ore: ores[Math.floor(Math.random() * 3)]})
+    res.json({battle : false, ore: "Iron"})
   }
   else{
     res.json({battle : true, monster : monsters[Math.floor(Math.random() * 4)], health: 100, attack : Math.floor(Math.random() * 60), defense : Math.floor(Math.random() * 60), speed : Math.floor(Math.random() * 60)})
