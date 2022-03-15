@@ -165,6 +165,16 @@ app.post("/collect", function (req, res) {
   //console.log(activeStats.inventory);
 });
 
+app.post("/craft", function (req, res) {
+  let item = req.body;
+  removeItem(item);
+  updateData();
+});
+
+app.post("/equip", function (req, res) {
+
+});
+
 app.get("/stats", function (req, res){
   res.json(activeStats);
 });
@@ -219,5 +229,21 @@ function addItem(item){
 		tempInv.push(item);
 		activeStats.inventory = JSON.stringify(tempInv);
 
+}
+}
+function removeItem(item){
+	let itemName = item.item;
+	let itemCheck = 0;
+	let tempInv = JSON.parse(activeStats.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item == itemName){
+			tempInv[x].quantity -= 1;
+			itemCheck = 1;
+			activeStats.inventory = JSON.stringify(tempInv);
+		}
+	}
+	if (itemCheck === 0){
+		tempInv.pop(item);
+		activeStats.inventory = JSON.stringify(tempInv);
 }
 }

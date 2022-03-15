@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import Inventory from "./Inventory";
-import Materials from "./material";
 //import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { HomeMessages, inventoryData, materials } from './data';
+import { HomeMessages,collectItems, craftItems, equipItems } from './data';
 import Heading from "./TableHead";
-import MaterialHeader from "./MaterialHead";
 import Text from "./homeText";
 import "./Home.css";
 import styled from "styled-components";
 import background from "./Images/Home.jpg";
 import {getActiveStats} from "./data";
-
-let ibool = false;
-let state = "Open Inventory"
-let tablerow;
-let mbool = false
-let mstate = "Show Materials"
+import useSound from 'use-sound';
+import crafting from "./Images/craft.mp3";
+import equipping from "./Images/equip.mp3";
+import opening from "./Images/doorOpen.mp3";
+import closing from "./Images/doorClose.mp3";
 
 const App = () => {
   const [bool, setBool] = useState(true)
@@ -25,7 +22,14 @@ const App = () => {
   const [stats, setStats] = useState(getStats());
   const [state, setButton] = useState("Open Inventory");
   const [table, setTable] = useState(getTable());
-
+  const [craft] = useSound(crafting);
+  const [equip] = useSound(equipping);
+  const [playbackRate] = React.useState(2);
+  const [open] = useSound(opening, {playbackRate});
+  const [close] = useSound(closing, {playbackRate});
+  const StyledButton = styled.button`
+    font-size: 10px;
+`;
 
   async function getTable(){
     if(b){
@@ -39,12 +43,14 @@ const App = () => {
   function handleClick(e) {
     e.preventDefault();
     if(inventoryToggle){
-      setInventory(false)
-      setButton("Open Inventory")
+      setInventory(false);
+      setButton("Open Inventory");
+      close();
     }
     else{
-      setInventory(true)
-      setButton("Close Inventory")
+      setInventory(true);
+      setButton("Close Inventory");
+      open();
     }
 
   }
@@ -59,20 +65,6 @@ const App = () => {
 
   }
 
-  const [materialToggle, setMaterial] = useState(false);
-  function handleMat(e) {
-    e.preventDefault();
-    if(mbool){
-      mbool = false
-      mstate = "Show Materials"
-    }
-    else{
-      mbool = true
-      mstate = "Hide Materials"
-    }
-    setMaterial(mbool);
-  }
-
   const [ht, setHT]= useState(true);
 
   return (
@@ -82,23 +74,19 @@ const App = () => {
       <ContentBox>
         <Content1>
           Crafting Area
-          <div align="center">
-            {materialToggle && < MaterialHeader />}
-            {materialToggle && < Materials />}
-            <button onClick={handleMat}>{mstate}</button>
-          </div>
-
           <div>
-            <button onClick={handleCraftWS}>Craft Wooden Sword</button>
-            <button onClick={handleCraftMS}>Craft Metal Sword</button>
-            <button onClick={handleCraftWA}>Craft Wooden Armor</button>
-            <button onClick={handleCraftMA}>Craft Metal Armor</button>
-            <button onClick={handleCraftWH}>Craft Wooden Hammer</button>
-            <button onClick={handleCraftMH}>Craft Metal Hammer</button>
-            <button onClick={handleCraftWSh}>Craft Wooden Shield</button>
-            <button onClick={handleCraftMSh}>Craft Metal Shield</button>
-            <button onClick={handleCraftL}>Craft Leather</button>
-            <button onClick={handleCraftF}>Craft Food</button>
+            <StyledButton onClick={handleCraftWS}>Craft Wooden Sword</StyledButton>
+            <StyledButton onClick={handleCraftWP}>Craft Wooden Pickaxe</StyledButton>
+            <StyledButton onClick={handleCraftWSh}>Craft Wooden Shield</StyledButton>
+            
+            <StyledButton onClick={handleCraftSS}>Craft Stone Sword</StyledButton>
+            <StyledButton onClick={handleCraftSP}>Craft Stone Pickaxe</StyledButton>
+            
+            <StyledButton onClick={handleCraftIS}>Craft Iron Sword</StyledButton>
+            <StyledButton onClick={handleCraftISh}>Craft Iron Shield</StyledButton>
+            <StyledButton onClick={handleCraftIA}>Craft Iron Armor</StyledButton>
+
+            <StyledButton onClick={handleCraftL}>Craft Leather Armor</StyledButton>
           </div>
         </Content1>
         <Content2>
@@ -109,6 +97,24 @@ const App = () => {
             <button onClick={handleClick}>{state}</button>
           </div>
         </Content2>
+        <Content3>
+          Equip Weapons
+          <div>
+            <StyledButton onClick={equipWS}>Equip Wooden Sword</StyledButton>
+            <StyledButton onClick={equipWSh}>Equip Wooden Shield</StyledButton>
+
+            <StyledButton onClick={equipSS}>Equip Stone Sword</StyledButton>
+
+            <StyledButton onClick={equipIS}>Equip Iron Sword</StyledButton>
+            <StyledButton onClick={equipISh}>Equip Iron Shield</StyledButton>
+            <StyledButton onClick={equipIA}>Equip Iron Armor</StyledButton>
+
+            <StyledButton onClick={equipL}>Equip Leather Armor</StyledButton>
+
+            <StyledButton onClick={equipF}>Eat Food</StyledButton>
+          </div>
+
+        </Content3>
       </ContentBox>
       <Footer>Player Stats
       <div>User: {stats.username} Health: {stats.health} Attack: {stats.attack} Defense: {stats.defense} Speed: {stats.speed}</div>
@@ -120,97 +126,181 @@ const App = () => {
   // Crafting functions
   function handleCraftWS() {
     HomeMessages.unshift("Crafted a Wooden Sword");
-    materials[0].quantity -= 5;
-    inventoryData[0].quantity += 1;
+    collectItems({item : "Wooden Sword", quantity : 1, type : "Weapon",description : "+5 Attack"});
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"});
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    craft();
   }
-  function handleCraftMS() {
-    HomeMessages.unshift("Crafted a Metal Sword");
-    materials[1].quantity -= 5;
-    inventoryData[6].quantity += 1;
+  function handleCraftWP() {
+    HomeMessages.unshift("Crafted a Wooden Pickaxe");
+    collectItems({item : "Wooden Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
-  }
-  function handleCraftWA() {
-    HomeMessages.unshift("Crafted Wooden Armor");
-    materials[0].quantity -= 5;
-    inventoryData[3].quantity += 1;
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-  }
-  function handleCraftMA() {
-    HomeMessages.unshift("Crafted Metal Armor");
-    materials[1].quantity -= 5;
-    inventoryData[5].quantity += 1;
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-  }
-  function handleCraftWH() {
-    HomeMessages.unshift("Crafted a Wooden Hammer");
-    materials[0].quantity -= 5;
-    inventoryData[1].quantity += 1;
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-  }
-  function handleCraftMH() {
-    HomeMessages.unshift("Crafted a Metal Hammer");
-    materials[1].quantity -= 5;
-    inventoryData[7].quantity += 1;
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
+    craft();
   }
   function handleCraftWSh() {
     HomeMessages.unshift("Crafted a Wooden Shield");
-    materials[0].quantity -= 5;
-    inventoryData[2].quantity += 1;
+    collectItems({item : "Wooden Shield", quantity : 1, type : "Weapon",description : "+3 Defence"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    craft();
   }
-  function handleCraftMSh() {
-    HomeMessages.unshift("Crafted a Metal Shield");
-    materials[1].quantity -= 5;
-    inventoryData[4].quantity += 1;
+  function handleCraftSS() {
+    HomeMessages.unshift("Crafted a Stone Sword");
+    collectItems({item : "Stone Sword", quantity : 1, type : "Weapon",description : "+8 Attack"})
+    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    craft();
+  }
+  function handleCraftSP() {
+    HomeMessages.unshift("Crafted a Stone Pickaxe");
+    collectItems({item : "Stone Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
+    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    craft();
+  }
+  function handleCraftIS() {
+    HomeMessages.unshift("Crafted an Iron Sword");
+    collectItems({item : "Iron Sword", quantity : 1, type : "Weapon",description : "+10 Attack"})
+    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    craft();
+  }
+  function handleCraftISh() {
+    HomeMessages.unshift("Crafted an Iron Shield");
+    collectItems({item : "Iron Shield", quantity : 1, type : "Weapon",description : "+7 Defence"})
+    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    craft();
+  }
+  function handleCraftIA() {
+    HomeMessages.unshift("Crafted an Iron Armor");
+    collectItems({item : "Iron Shield", quantity : 1, type : "Weapon",description : "+10 Defence"})
+    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    craft();
   }
   function handleCraftL() {
-    HomeMessages.unshift("Crafted Leather");
-    materials[2].quantity -= 5;
+    HomeMessages.unshift("Crafted Leather Armor");
+    collectItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"})
+    craftItems({item : "Leather", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    craft();
   }
-  function handleCraftF() {
-    HomeMessages.unshift("Made some deer meat soup");
-    materials[3].quantity -= 5;
-    inventoryData[8].quantity += 1;
+
+  // Equipping Functions
+  function equipWS() {
+    HomeMessages.unshift("Wooden Sword equipped");
+    equipItems();
+    craftItems({item : "Wooden Sword", quantity : 1, type :  "Weapon",description : "+5 Attack"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
+    equip();
+  }
+  function equipWSh() {
+    HomeMessages.unshift("Wooden Shield equipped");
+    equipItems();
+    craftItems({item : "Wooden Shield", quantity : 1, type :  "Weapon",description : "+3 Defence"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipSS() {
+    HomeMessages.unshift("Stone Sword equipped");
+    equipItems();
+    craftItems({item : "Stone Sword", quantity : 1, type :  "Weapon",description : "+8 Attack"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipIS() {
+    HomeMessages.unshift("Iron Sword equipped");
+    equipItems();
+    craftItems({item : "Iron Sword", quantity : 1, type :  "Weapon",description : "+10 Attack"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipISh() {
+    HomeMessages.unshift("Iron Shield equipped");
+    equipItems();
+    craftItems({item : "Iron Shield", quantity : 1, type :  "Weapon",description : "+7 Defence"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipIA() {
+    HomeMessages.unshift("Iron Armor equipped");
+    equipItems();
+    craftItems({item : "Iron Armor", quantity : 1, type :  "Weapon" ,description : "+10 Defence"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipL() {
+    HomeMessages.unshift("Leather Armor equipped");
+    equipItems();
+    craftItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
+  }
+  function equipF() {
+    HomeMessages.unshift("Ate meat");
+    equipItems();
+    craftItems({item : "Venison", quantity : 1, type : "Crafting Item",description : "+10 Health"})
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    equip();
   }
 };
 
 
-// Styling Info
+
+// Styled Components Styling
 const Container = styled.div`
   background-image: url(${background});
   background-size: cover;
@@ -263,25 +353,20 @@ const ContentBox = styled.div`
 const Content1 = styled.div`
   background-color:rgba(0, 0, 0, 0.5);
   padding: 0.25rem;
+  width: 50%;
+  height: 100%;
+`;
+const Content2 = styled.div`
+  background-color:rgba(0, 0, 0, 0.5);
+  padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
-const Content2 = styled(Content1)``;
+const Content3 = styled(Content1)``;
 const Footer = styled.footer`
   background: #1f2128;
   grid-area: footer;
   padding: 0.25rem;
 `;
-
-// Dropdown code
-/* <div className="container">
-               <div className="row">
-                 <div className="col-md-4"></div>
-                 <div className="col-md-4">
-                   <Select options={ craftItems } />
-                 </div>
-                 <div className="col-md-4"></div>
-               </div>
-</div> */
 
 export default App;
