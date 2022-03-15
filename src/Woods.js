@@ -15,6 +15,7 @@ import {getActiveStats} from "./data"
 
 
 const App = () => {
+  const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
@@ -39,9 +40,11 @@ const App = () => {
   }
 
   async function getStats(){
+    if(bool){
+    setBool(false);
     let jsonData = await getActiveStats();
     setStats(jsonData);
-
+  }
   }
 
   function killDeer(){

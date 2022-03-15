@@ -7,6 +7,8 @@ export function battleSequence(player, enemy, action){
     userDefend = false;
     if (action === "attack"){
       enemy = attack(player, enemy, enemyDefend);
+      console.log(player)
+      console.log(enemy)
     } else if(action === "defend"){
       userDefend = true;
     } else{
@@ -19,6 +21,8 @@ export function battleSequence(player, enemy, action){
     enemyDefend = false;
     if (action === "attack"){
       player = attack(enemy, player, userDefend);
+      console.log(player)
+      console.log(enemy)
     } else if(action === "defend"){
       enemyDefend = true;
     } else{
@@ -32,6 +36,8 @@ export function battleSequence(player, enemy, action){
     enemyDefend = false;
     if (action === "attack"){
       player = attack(enemy, player, userDefend);
+      console.log(player)
+      console.log(enemy)
     } else if(action === "defend"){
       enemyDefend = true;
     } else{
@@ -44,6 +50,8 @@ export function battleSequence(player, enemy, action){
     userDefend = false;
     if (action === "attack"){
       enemy = attack(player, enemy, enemyDefend);
+      console.log(player)
+      console.log(enemy)
     } else if(action === "defend"){
       userDefend = true;
     } else{
@@ -53,8 +61,8 @@ export function battleSequence(player, enemy, action){
       return player, enemy;
     }
   }
-
-  return player, enemy;
+  player.health -= 10;
+  return [player, enemy];
 }
 
 function attack(first, second, opponentDefend){
@@ -64,10 +72,11 @@ function attack(first, second, opponentDefend){
     baseD *= 1.5
   }
   let damage = baseA - baseD;
-  if (damage >= 0){
+  if (damage <= 0){
     damage = 0;
   }
-  second.health -= damage
+  second.health -= damage;
+  console.log(first)
   return second;
 }
 

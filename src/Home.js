@@ -19,6 +19,7 @@ let mbool = false
 let mstate = "Show Materials"
 
 const App = () => {
+  const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [stats, setStats] = useState(getStats())
   function handleClick(e) {
@@ -35,8 +36,11 @@ const App = () => {
   }
 
   async function getStats(){
+    if(bool){
+    setBool(false);
     let jsonData = await getActiveStats();
     setStats(jsonData);
+  }
 
   }
 

@@ -57,16 +57,22 @@ const App = () => {
   }
 
   function updateBattle(player,enemy,action){
+    let new_user;
+    let new_enemy;
+    let temp;
     console.log("hi")
-    let new_user, new_enemy = battleSequence(player,enemy,action);
-    console.log(new_user)
+    temp = battleSequence(player,enemy,action);
+    console.log(temp)
+    new_user = temp[0]
+    new_enemy = temp[1]
     console.log(new_enemy)
     //if (player.health <= 0)
 
-    //setStats(new_user)
-    //setActiveStats(new_user)
-    //setBattle(new_enemy)
-    //setBool(true)
+    setStats(new_user)
+    setActiveStats(new_user)
+    setBattle(new_enemy)
+    console.log(battle)
+
   }
 
 
@@ -99,7 +105,7 @@ const App = () => {
 }
 
   else if (!battle.battle){
-    console.log(battle)
+
     return(
     <div>
     <Container2>
@@ -127,7 +133,9 @@ const App = () => {
   )
   }
   else if (battle.battle){
+    console.log(battle)
     let enemy;
+    battle.defense = 0;
     if (battle.monster == "Goblin"){
       enemy = goblin;
     }
@@ -151,7 +159,7 @@ const App = () => {
         <img src= {enemy}/>
         </div>
         <div>
-        Enemy: {battle.monster} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
+        Enemy: {battle.monster} Health: {battle.health} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
         </div>
         </Main>
         <SideBar><Text /></SideBar>
