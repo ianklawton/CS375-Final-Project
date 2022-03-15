@@ -11,12 +11,13 @@ import useSound from 'use-sound';
 import {getActiveStats} from "./data"
 
 const App = () => {
+  const [b, setB] = useState(true)
   const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory")
   const [stats, setStats] = useState(getStats())
-
+  const [table, setTable] = useState(getTable());
   const [slay] = useSound(slaying);
   const [stone] = useSound(stoning);
 
@@ -37,18 +38,20 @@ const App = () => {
     if(bool){
     setBool(false);
     let jsonData = await getActiveStats();
+    setStats({this: "re-render"})
     setStats(jsonData);
   }
   }
 
-  // function collectFlint(){
-  //   collectItems("branch")
-  //   MountainMessages.unshift("You picked up some flint");
-  //   setHT(false);
-  //   setTimeout(function(){
-  //     setHT(true)
-  //   }.bind(),0.5);
-  // }
+
+  async function getTable(){
+    if(b){
+    setB(false);
+    let jsonData = await Inventory();
+    setTable({this: "re-render"})
+    setTable(jsonData);
+  }
+}
 
   function collectStone(){
     collectItems({item : "Stone", quantity : 1, type : "Crafting Item",description : ""})
@@ -87,7 +90,7 @@ const App = () => {
         Inventory
         <div align="center">
           {inventoryToggle && <Heading />}
-          {inventoryToggle && <Inventory />}
+          {inventoryToggle && table}
           <button onClick={handleClick}>{state}</button>
         </div>
         </Content2>

@@ -14,15 +14,27 @@ import {getActiveStats} from "./data";
 
 let ibool = false;
 let state = "Open Inventory"
-
+let tablerow;
 let mbool = false
 let mstate = "Show Materials"
 
 const App = () => {
   const [bool, setBool] = useState(true)
+  const [b, setB] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [stats, setStats] = useState(getStats());
   const [state, setButton] = useState("Open Inventory");
+  const [table, setTable] = useState(getTable());
+
+
+  async function getTable(){
+    if(b){
+    setB(false);
+    let jsonData = await Inventory();
+    setTable({this: "re-render"})
+    setTable(jsonData);
+  }
+}
 
   function handleClick(e) {
     e.preventDefault();
@@ -41,30 +53,11 @@ const App = () => {
     if(bool){
     setBool(false);
     let jsonData = await getActiveStats();
+    setStats({this: "re-render"})
     setStats(jsonData);
-    //inventoryData.push({stats.inventory})
   }
 
   }
-
-  // function matsTable(){
-  //   tablerow = {stats.inventory}.map((row) =>
-	// 	<tr>
-	// 		<td>
-	// 			<span>{row.item}</span>
-	// 		</td>
-	// 		<td>
-	// 			<span>{row.quantity}</span>
-	// 		</td>
-	// 		<td>
-	// 			<span>{row.type}</span>
-	// 		</td>
-	// 		<td>
-	// 			<span>{row.description}</span>
-	// 		</td>
-	// 	</tr>);
-  // }
-
 
   const [materialToggle, setMaterial] = useState(false);
   function handleMat(e) {
@@ -112,9 +105,8 @@ const App = () => {
           Inventory
           <div align="center">
             {inventoryToggle && <Heading />}
-            {inventoryToggle && <Inventory />}
+            {inventoryToggle && table}
             <button onClick={handleClick}>{state}</button>
-            {stats.inventory}
           </div>
         </Content2>
       </ContentBox>

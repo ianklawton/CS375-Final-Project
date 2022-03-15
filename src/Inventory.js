@@ -1,8 +1,14 @@
-import React from 'react';
-import './Home.css';
-import { inventoryData } from './data';
 
-export default function Inventory (){
+import './Home.css';
+//import { inventoryData } from './data';
+import { getActiveStats } from './data';
+
+
+
+export default async function Inventory (){
+	let inventory = await getActiveStats();
+	let inventoryData = JSON.parse(inventory.inventory)
+	console.log(inventoryData)
 	const inventoryRow = inventoryData.map((row) =>
 		<tr>
 			<td>
@@ -20,7 +26,12 @@ export default function Inventory (){
 
 		</tr>
     );
+		console.log(inventoryRow)
     return (
             <tbody id="body">{inventoryRow}</tbody>
     )
 }
+//let inventory = i()
+//console.log(inventory)
+//let inventoryData = inventory.inventory;
+//console.log(inventoryData)

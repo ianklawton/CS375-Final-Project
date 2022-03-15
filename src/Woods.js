@@ -14,11 +14,22 @@ import {getActiveStats} from "./data"
 
 const App = () => {
   const [bool, setBool] = useState(true)
+  const [b, setB] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
   const [state, setButton] = useState("Open Inventory");
   const [stats, setStats] = useState(getStats());
+  const [table, setTable] = useState(getTable());
 
+
+  async function getTable(){
+    if(b){
+    setB(false);
+    let jsonData = await Inventory();
+    setTable({this: "re-render"});
+    setTable(jsonData);
+  }
+}
 
   // Loading Sound Effects
   const [chop] = useSound(chopping);
@@ -41,12 +52,14 @@ const App = () => {
     if(bool){
     setBool(false);
     let jsonData = await getActiveStats();
+    setStats({this: "re-render"})
     setStats(jsonData);
-    console.log(jsonData)
+
   }
   }
 
   function killDeer(){
+    setB(true);
     collectItems({item : "Venison", quantity : 1, type : "Food",description : "+10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : ""})
     materials[2].quantity += 2;
@@ -72,6 +85,7 @@ const App = () => {
   // }
 
   function collectWood(){
+    setB(true);
     collectItems({item : "Wood", quantity : 1, type : "Crafting Item",description : ""})
     materials[0].quantity += 5;
     WoodsMessages.unshift("Chopped up some wood");
@@ -98,7 +112,7 @@ const App = () => {
         Inventory
         <div align ="center">
           {inventoryToggle && <Heading />}
-          {inventoryToggle && <Inventory />}
+          {inventoryToggle && table}
         <button onClick={handleClick}>{state}</button>
         </div>
         </Content2>
