@@ -228,9 +228,9 @@ function addItem(item){
 	if (itemCheck === 0){
 		tempInv.push(item);
 		activeStats.inventory = JSON.stringify(tempInv);
+	}
+}
 
-}
-}
 function removeItem(item){
 	let itemName = item.item;
 	let itemCheck = 0;
@@ -239,11 +239,9 @@ function removeItem(item){
 		if (tempInv[x].item == itemName){
 			tempInv[x].quantity -= 1;
 			itemCheck = 1;
+			if (tempInv[x].quantity === 0){
+				delete tempInv[x];
 			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
-	if (itemCheck === 0){
-		tempInv.pop(item);
-		activeStats.inventory = JSON.stringify(tempInv);
-}
 }

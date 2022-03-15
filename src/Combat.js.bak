@@ -115,7 +115,7 @@ function heal(user){
     if (rNum > 3){ //heal 5
       user.health += 5;
 	  healVal = 5;
-    } else if (rNum <= 3 && rNum > 8){ //heal 10
+    } else if (rNum <= 3 && rNum > 9){ //heal 10
       user.health += 10;
 	  healVal = 10;
     } else{ //heal 50
