@@ -4,6 +4,10 @@ export function battleSequence(player, enemy, action){
   let userDefend;
   let enemyDefend;
   let enemyAction;
+  let userTxt;
+  let enemyTxt;
+  let damageTxt;
+  let healTxt;
   let enemyActionNum = Math.floor(Math.random() * 10);
   if (enemyActionNum > 5){
       enemyAction = "attack";
@@ -15,13 +19,16 @@ export function battleSequence(player, enemy, action){
   if (player.speed >= enemy.speed){ //user attacks then enemy attacks
     userDefend = false;
     if (action === "attack"){
-      enemy = attack(player, enemy, enemyDefend);
-      console.log(player)
-      console.log(enemy)
+      [enemy, damageTxt] = attack(player, enemy, enemyDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  userTxt = `You delt ${damageTxt} to the enemy`;
     } else if(action === "defend"){
       userDefend = true;
+	  userTxt = "You hold a defensive stance";
     } else{
-      player = heal(player);
+      [player, healTxt] = heal(player);
+	  userTxt = `You healed ${healTxt} health`;
     }
     if (player.health <= 0 || enemy.health <=0){
       return [player, enemy];
@@ -29,13 +36,16 @@ export function battleSequence(player, enemy, action){
 
     enemyDefend = false;
     if (enemyAction === "attack"){
-      player = attack(enemy, player, userDefend);
-      console.log(player)
-      console.log(enemy)
+      [player, damageTxt] = attack(enemy, player, userDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  enemyTxt = `The enemy delt ${damageTxt} to you`;
     } else if(enemyAction === "defend"){
       enemyDefend = true;
+	  enemyTxt = "The enemy holds a defensive stance";
     } else{
-      enemy = heal(enemy);
+      [enemy, healTxt] = heal(enemy);
+	  enemyTxt = `The enemy healed ${healTxt} health`;
     }
     if (player.health <= 0 || enemy.health <=0){
       return [player, enemy];
@@ -44,13 +54,16 @@ export function battleSequence(player, enemy, action){
   } else { //enemy attacks then user attacks
     enemyDefend = false;
     if (enemyAction === "attack"){
-      player = attack(enemy, player, userDefend);
-      console.log(player)
-      console.log(enemy)
+      [player, damageTxt] = attack(enemy, player, userDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  enemyTxt = `The enemy delt ${damageTxt} to you`;
     } else if(enemyAction === "defend"){
       enemyDefend = true;
+	  enemyTxt = "The enemy holds a defensive stance";
     } else{
-      enemy = heal(enemy);
+		[enemy, healTxt] = heal(enemy);
+		enemyTxt = `The enemy healed ${healTxt} health`;
     }
     if (player.health <= 0 || enemy.health <=0){
       return [player, enemy];
@@ -58,20 +71,23 @@ export function battleSequence(player, enemy, action){
 
     userDefend = false;
     if (action === "attack"){
-      enemy = attack(player, enemy, enemyDefend);
-      console.log(player)
-      console.log(enemy)
+      [enemy, damageTxt] = attack(player, enemy, enemyDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  userTxt = `You delt ${damageTxt} to the enemy`;
     } else if(action === "defend"){
       userDefend = true;
+	  userTxt = "You hold a defensive stance";
     } else{
-      player = heal(player);
+      [player, healTxt] = heal(player);
+	  userTxt = `You healed ${healTxt} health`;
     }
     if (player.health <= 0 || enemy.health <= 0){
       return [player, enemy];
     }
   }
   
-  return [player, enemy];
+  return [player, enemy, userTxt, enemyTxt];
 }
 
 function attack(first, second, opponentDefend){
@@ -89,18 +105,22 @@ function attack(first, second, opponentDefend){
 	second.health = 0;
   }
   console.log(first)
-  return second;
+  return [second, damage];
 }
 
 function heal(user){
+	let healVal;
   if (user.hasOwnProperty("monster")){
     let rNum = Math.floor(Math.random() * 10);
     if (rNum > 3){ //heal 5
       user.health += 5;
+	  healVal = 5;
     } else if (rNum <= 3 && rNum > 8){ //heal 10
       user.health += 10;
+	  healVal = 10;
     } else{ //heal 50
       user.health += 50;
+	  healVal = 50;
     }
   } else { //if the player heals
 	let tempInv = JSON.parse(user.inventory);
@@ -111,12 +131,13 @@ function heal(user){
 				delete tempInv[x];
 			user.inventory = JSON.stringify(tempInv);
 			user.health += 30;
-			return user;
+			healVal = 30
+			return [user, healVal];
 			}
 			
 		}
 	}
   }
 
-  return user;
+  return [user, healVal];
 }

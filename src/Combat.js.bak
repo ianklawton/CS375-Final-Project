@@ -4,6 +4,9 @@ export function battleSequence(player, enemy, action){
   let userDefend;
   let enemyDefend;
   let enemyAction;
+  let userTxt;
+  let enemyTxt;
+  let damageTxt;
   let enemyActionNum = Math.floor(Math.random() * 10);
   if (enemyActionNum > 5){
       enemyAction = "attack";
@@ -15,9 +18,10 @@ export function battleSequence(player, enemy, action){
   if (player.speed >= enemy.speed){ //user attacks then enemy attacks
     userDefend = false;
     if (action === "attack"){
-      enemy = attack(player, enemy, enemyDefend);
-      console.log(player)
-      console.log(enemy)
+      [enemy, damageTxt] = attack(player, enemy, enemyDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  userTxt = `You delt ${damageTxt} to the enemy`;
     } else if(action === "defend"){
       userDefend = true;
     } else{
@@ -29,9 +33,10 @@ export function battleSequence(player, enemy, action){
 
     enemyDefend = false;
     if (enemyAction === "attack"){
-      player = attack(enemy, player, userDefend);
-      console.log(player)
-      console.log(enemy)
+      [player, damageTxt] = attack(enemy, player, userDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  enemyTxt = `The enemy delt ${damageTxt} to you`;
     } else if(enemyAction === "defend"){
       enemyDefend = true;
     } else{
@@ -44,9 +49,10 @@ export function battleSequence(player, enemy, action){
   } else { //enemy attacks then user attacks
     enemyDefend = false;
     if (enemyAction === "attack"){
-      player = attack(enemy, player, userDefend);
-      console.log(player)
-      console.log(enemy)
+      [player, damageTxt] = attack(enemy, player, userDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  enemyTxt = `The enemy delt ${damageTxt} to you`;
     } else if(enemyAction === "defend"){
       enemyDefend = true;
     } else{
@@ -58,9 +64,10 @@ export function battleSequence(player, enemy, action){
 
     userDefend = false;
     if (action === "attack"){
-      enemy = attack(player, enemy, enemyDefend);
-      console.log(player)
-      console.log(enemy)
+      [enemy, damageTxt] = attack(player, enemy, enemyDefend);
+      //console.log(player)
+      //console.log(enemy)
+	  userTxt = `You delt ${damageTxt} to the enemy`;
     } else if(action === "defend"){
       userDefend = true;
     } else{
@@ -71,7 +78,7 @@ export function battleSequence(player, enemy, action){
     }
   }
   
-  return [player, enemy];
+  return [player, enemy, userTxt, enemyTxt];
 }
 
 function attack(first, second, opponentDefend){
@@ -89,7 +96,7 @@ function attack(first, second, opponentDefend){
 	second.health = 0;
   }
   console.log(first)
-  return second;
+  return [second, damage];
 }
 
 function heal(user){
@@ -103,15 +110,15 @@ function heal(user){
       user.health += 50;
     }
   } else { //if the player heals
-	let itemCheck = 0;
 	let tempInv = JSON.parse(user.inventory);
 	for (let x = 0; x < tempInv.length; x++){
 		if (tempInv[x].item === "food"){
 			tempInv[x].quantity -= 1;
-			itemCheck = 1;
 			if (tempInv[x].quantity === 0){
 				delete tempInv[x];
-			activeStats.inventory = JSON.stringify(tempInv);
+			user.inventory = JSON.stringify(tempInv);
+			user.health += 30;
+			return user;
 			}
 			
 		}
