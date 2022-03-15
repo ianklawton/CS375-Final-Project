@@ -28,11 +28,11 @@ export function battleSequence(player, enemy, action){
     }
 
     enemyDefend = false;
-    if (enemyAction === "attack"){
+    if (action === "attack"){
       player = attack(enemy, player, userDefend);
       console.log(player)
       console.log(enemy)
-    } else if(enemyAction === "defend"){
+    } else if(action === "defend"){
       enemyDefend = true;
     } else{
       enemy = heal(enemy);
@@ -43,11 +43,11 @@ export function battleSequence(player, enemy, action){
 
   } else { //enemy attacks then user attacks
     enemyDefend = false;
-    if (enemyAction === "attack"){
+    if (action === "attack"){
       player = attack(enemy, player, userDefend);
       console.log(player)
       console.log(enemy)
-    } else if(enemyAction === "defend"){
+    } else if(action === "defend"){
       enemyDefend = true;
     } else{
       enemy = heal(enemy);
