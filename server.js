@@ -169,8 +169,9 @@ app.get("/stats", function (req, res){
   res.json(activeStats);
 });
 
-app.post("/stats", function (req, res){
-    updateData();
+app.post("/setStats", function (req, res){
+    activeStats = req.body;
+	updateData();
 });
 
 app.get("/cave", function (req, res){

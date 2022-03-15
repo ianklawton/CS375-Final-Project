@@ -79,7 +79,7 @@ export function getActiveStats(){
 }
 
 export function setActiveStats(stats){
-		fetch("http://localhost:8080/collect", {
+		fetch("http://localhost:8080/setStats", {
 	    method: "POST",
 	    headers: {
 	      "Content-Type": "application/json"
