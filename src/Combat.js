@@ -103,7 +103,19 @@ function heal(user){
       user.health += 50;
     }
   } else { //if the player heals
-
+	let tempInv = JSON.parse(user.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item === "food"){
+			tempInv[x].quantity -= 1;
+			if (tempInv[x].quantity === 0){
+				delete tempInv[x];
+			user.inventory = JSON.stringify(tempInv);
+			user.health += 30;
+			return user;
+			}
+			
+		}
+	}
   }
 
   return user;

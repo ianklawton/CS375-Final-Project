@@ -28,11 +28,11 @@ export function battleSequence(player, enemy, action){
     }
 
     enemyDefend = false;
-    if (action === "attack"){
+    if (enemyAction === "attack"){
       player = attack(enemy, player, userDefend);
       console.log(player)
       console.log(enemy)
-    } else if(action === "defend"){
+    } else if(enemyAction === "defend"){
       enemyDefend = true;
     } else{
       enemy = heal(enemy);
@@ -43,11 +43,11 @@ export function battleSequence(player, enemy, action){
 
   } else { //enemy attacks then user attacks
     enemyDefend = false;
-    if (action === "attack"){
+    if (enemyAction === "attack"){
       player = attack(enemy, player, userDefend);
       console.log(player)
       console.log(enemy)
-    } else if(action === "defend"){
+    } else if(enemyAction === "defend"){
       enemyDefend = true;
     } else{
       enemy = heal(enemy);
@@ -103,7 +103,19 @@ function heal(user){
       user.health += 50;
     }
   } else { //if the player heals
-
+	let itemCheck = 0;
+	let tempInv = JSON.parse(user.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item === "food"){
+			tempInv[x].quantity -= 1;
+			itemCheck = 1;
+			if (tempInv[x].quantity === 0){
+				delete tempInv[x];
+			activeStats.inventory = JSON.stringify(tempInv);
+			}
+			
+		}
+	}
   }
 
   return user;
