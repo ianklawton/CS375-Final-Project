@@ -20,7 +20,8 @@ import useSound from 'use-sound';
 import mining from "./Images/stones.mp3";
 
 const App = () => {
-
+  const [b, setB] = useState(true)
+  const [table, setTable] = useState(getTable());
   const [bool, setBool] = useState(true)
   const [inventoryToggle, setInventory] = useState(false);
   const [ht, setHT]= useState(true);
@@ -37,11 +38,18 @@ const App = () => {
     new_stats.health = 50;
     setActiveStats(new_stats);
   }
+  async function getTable(){
+    if(b){
+    setB(false);
+    let jsonData = await Inventory();
+    setTable({this: "re-render"});
+    setTable(jsonData);
+  }
+}
 
   async function resolvePromise(){
       let jsonData = await exploreCave();
       setBattle(jsonData)
-
   }
 
   function collectOre(){
@@ -66,10 +74,25 @@ const App = () => {
   async function updateBattle(player,enemy,action){
     let new_user;
     let new_enemy;
+    let usr_text
+    let em_text
     let temp;
     temp = await battleSequence(player,enemy,action);
     new_user = temp[0]
     new_enemy = temp[1]
+    usr_text = temp[2]
+    em_text = temp[3]
+
+    CaveMessages.unshift(usr_text);
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+    CaveMessages.unshift(em_text);
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
 
     setStats({this: "re-render"})
     setStats(new_user)
@@ -108,6 +131,7 @@ function page(){
 }
 
   else if (!battle.battle){
+
     return(
     <div>
     <Container2>
@@ -124,7 +148,7 @@ function page(){
         Inventory
         <div align ="center">
           {inventoryToggle && <Heading />}
-          {inventoryToggle && <Inventory />}
+          {inventoryToggle && table}
         <button onClick={handleClick}>{state}</button>
         </div>
         </Content2>
@@ -136,20 +160,26 @@ function page(){
   )
   }
   else if (battle.battle){
+
     let enemy;
     if (battle.monster == "Goblin"){
       enemy = goblin;
+
+
     }
     else if (battle.monster == "Dragon"){
       enemy = dragon;
+
     }
     else if (battle.monster == "Skeleton"){
       enemy = skeleton;
+
     }
     else if (battle.monster == "Witch"){
       enemy = witch;
+
     }
-    if (stats.health <= 0){
+    if (stats.health >= 0 && enemy.health <=0){
       return (
         <div>
         <Container>
@@ -173,13 +203,13 @@ function page(){
         </div>
       );
     }
-    else if (stats.health >= 0 && enemy.health <=0){
+    else if (stats.health <= 0){
       return (
         <div>
         <Container>
           <Main>
           <div>
-          You Win!
+          You Lose!
           </div>
           </Main>
           <SideBar><Text /></SideBar>

@@ -186,15 +186,15 @@ app.post("/setStats", function (req, res){
 
 app.get("/cave", function (req, res){
   monsters=['Goblin','Witch','Skeleton','Dragon']
-
+  scale_factor = [1,2,3,4]
 
   deter = Math.floor(Math.random() * 9)
-
+  chooseMonster = Math.floor(Math.random() * 4)
   if(deter <= 2){
     res.json({battle : false, ore: "Iron"})
   }
   else{
-    res.json({battle : true, monster : monsters[Math.floor(Math.random() * 4)], health: 100, attack : Math.floor(Math.random() * 60), defense : Math.floor(Math.random() * 60), speed : Math.floor(Math.random() * 60)})
+    res.json({battle : true, monster : monsters[chooseMonster], health: 100, attack : 1+Math.floor(Math.random() * 11)*scale_factor[chooseMonster], defense : 1+Math.floor(Math.random() * 11)*scale_factor[chooseMonster], speed : 1+Math.floor(Math.random() * 11)*scale_factor[chooseMonster]})
   }
 
 	// random number to find if fight or mine, if fight generate enemy stats, if mine random number to choose what resorce, send boolean (under key {"battle": true or false} from random number and enemy stats or minable resorce.
