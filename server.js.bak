@@ -165,22 +165,33 @@ app.post("/collect", function (req, res) {
   //console.log(activeStats.inventory);
 });
 
+app.post("/craft", function (req, res) {
+  let item = req.body;
+  removeItem(item);
+  updateData();
+});
+
+app.post("/equip", function (req, res) {
+
+});
+
 app.get("/stats", function (req, res){
   res.json(activeStats);
 });
 
 app.post("/setStats", function (req, res){
-    updateData();
+    activeStats = req.body;
+	updateData();
 });
 
 app.get("/cave", function (req, res){
   monsters=['Goblin','Witch','Skeleton','Dragon']
-  ores=["Copper","Iron","Titanium"]
+
 
   deter = Math.floor(Math.random() * 9)
 
   if(deter <= 2){
-    res.json({battle : false, ore: ores[Math.floor(Math.random() * 3)]})
+    res.json({battle : false, ore: "Iron"})
   }
   else{
     res.json({battle : true, monster : monsters[Math.floor(Math.random() * 4)], health: 100, attack : Math.floor(Math.random() * 60), defense : Math.floor(Math.random() * 60), speed : Math.floor(Math.random() * 60)})
@@ -217,6 +228,22 @@ function addItem(item){
 	if (itemCheck === 0){
 		tempInv.push(item);
 		activeStats.inventory = JSON.stringify(tempInv);
+	}
+}
 
+function removeItem(item){
+	let itemName = item.item;
+	let itemCheck = 0;
+	let tempInv = JSON.parse(activeStats.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].item == itemName){
+			tempInv[x].quantity -= 1;
+			itemCheck = 1;
+			activeStats.inventory = JSON.stringify(tempInv);
+		}
+	}
+	if (itemCheck === 0){
+		tempInv.pop(item);
+		activeStats.inventory = JSON.stringify(tempInv);
 }
 }
