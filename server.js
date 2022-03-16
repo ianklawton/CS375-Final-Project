@@ -171,9 +171,6 @@ app.post("/craft", function (req, res) {
   updateData();
 });
 
-app.post("/equip", function (req, res) {
-
-});
 
 app.get("/stats", function (req, res){
   res.json(activeStats);
@@ -200,6 +197,27 @@ app.get("/cave", function (req, res){
 	// random number to find if fight or mine, if fight generate enemy stats, if mine random number to choose what resorce, send boolean (under key {"battle": true or false} from random number and enemy stats or minable resorce.
 });
 
+app.post("/equip", function (req, res){
+	let itemEquip = req.body;
+	let tempInv = JSON.parse(activeStats.inventory);
+	for (let x = 0; x < tempInv.length; x++){
+		if (tempInv[x].equipped === true && tempInv[x].type === itemEquip.type){
+			activeStats.attack -= tempInv[x].attack;
+			activeStats.defense -= tempInv[x].defense;
+			activeStats.speed -= tempInv[x].speed;
+			tempInv[x].equipped = false;
+		}
+	}
+	for (let y = 0; y < tempInv.length; y++){
+		if (tempInv[y].item === itemEquip.item){
+			activeStats.attack += tempInv[x].attack;
+			activeStats.defense += tempInv[x].defense;
+			activeStats.speed += tempInv[x].speed;
+			tempInv[y].equipped = true;
+		}
+	}
+}
+
 app.listen(8080, () => {
     console.log('Listening on port 8080')
 });
@@ -219,7 +237,7 @@ function addItem(item){
 	let itemCheck = 0;
 	let tempInv = JSON.parse(activeStats.inventory);
 	for (let x = 0; x < tempInv.length; x++){
-		if (tempInv[x].item == itemName){
+		if (tempInv[x].item === itemName){
 			tempInv[x].quantity += 1;
 			itemCheck = 1;
 			activeStats.inventory = JSON.stringify(tempInv);
@@ -233,15 +251,14 @@ function addItem(item){
 
 function removeItem(item){
 	let itemName = item.item;
-	let itemCheck = 0;
 	let tempInv = JSON.parse(activeStats.inventory);
 	for (let x = 0; x < tempInv.length; x++){
-		if (tempInv[x].item == itemName){
-			tempInv[x].quantity -= 1;
-			itemCheck = 1;
+		if (tempInv[x].item === itemName){
+			tempInv[x].quantity -= item.quantity;
 			if (tempInv[x].quantity === 0){
 				delete tempInv[x];
 			activeStats.inventory = JSON.stringify(tempInv);
+			return
 		}
 	}
 }

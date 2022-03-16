@@ -119,8 +119,8 @@ function heal(user){
       user.health += 10;
 	  healVal = 10;
     } else{ //heal 50
-      user.health += 50;
-	  healVal = 50;
+      user.health += 30;
+	  healVal = 30;
     }
   } else { //if the player heals
 	let tempInv = JSON.parse(user.inventory);
