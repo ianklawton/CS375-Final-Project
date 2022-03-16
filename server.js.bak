@@ -167,8 +167,11 @@ app.post("/collect", function (req, res) {
 
 app.post("/craft", function (req, res) {
   let item = req.body;
+  //console.log(item);
   removeItem(item);
+  //console.log(activeStats, "before");
   updateData();
+  //console.log(activeStats);
 });
 
 
@@ -199,6 +202,7 @@ app.get("/cave", function (req, res){
 
 app.post("/equip", function (req, res){
 	let itemEquip = req.body;
+	console.log(itemEquip);
 	let tempInv = JSON.parse(activeStats.inventory);
 	for (let x = 0; x < tempInv.length; x++){
 		if (tempInv[x].equipped === true && tempInv[x].type === itemEquip.type){
@@ -206,6 +210,7 @@ app.post("/equip", function (req, res){
 			activeStats.defense -= tempInv[x].defense;
 			activeStats.speed -= tempInv[x].speed;
 			tempInv[x].equipped = false;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 	for (let y = 0; y < tempInv.length; y++){
@@ -214,13 +219,16 @@ app.post("/equip", function (req, res){
 			activeStats.defense += tempInv[y].defense;
 			activeStats.speed += tempInv[y].speed;
 			tempInv[y].equipped = true;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
-}
+	console.log(activeStats);
+	updateData();
+});
 
 app.listen(8080, () => {
     console.log('Listening on port 8080')
-});
+})
 
 function updateData(){
 	pool.query("UPDATE stats SET health = $1, attack = $2, defense = $3, speed = $4, inventory = $5 WHERE username = $6", [
@@ -256,7 +264,7 @@ function removeItem(item){
 		if (tempInv[x].item === itemName){
 			tempInv[x].quantity -= item.quantity;
 			if (tempInv[x].quantity === 0){
-				delete tempInv[x];
+				tempInv.splice(x, 1);
 			activeStats.inventory = JSON.stringify(tempInv);
 			return
 		}

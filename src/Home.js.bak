@@ -412,7 +412,8 @@ const App = () => {
   // Equipping Functions
   function equipWS() {
     HomeMessages.unshift("Wooden Sword equipped");
-    equipItems({item : "Wooden Sword", quantity : 1, type :  "Weapon",description : "+5 Attack"});
+    equipItems();
+    craftItems({item : "Wooden Sword", quantity : 1, type :  "Weapon",description : "+5 Attack"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -421,7 +422,8 @@ const App = () => {
   }
   function equipWSh() {
     HomeMessages.unshift("Wooden Shield equipped");
-    equipItems({item : "Wooden Shield", quantity : 1, type :  "Weapon",description : "+3 Defence"});
+    equipItems();
+    craftItems({item : "Wooden Shield", quantity : 1, type :  "Weapon",description : "+3 Defence"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -430,7 +432,8 @@ const App = () => {
   }
   function equipSS() {
     HomeMessages.unshift("Stone Sword equipped");
-    equipItems({item : "Stone Sword", quantity : 1, type :  "Weapon",description : "+8 Attack"});
+    equipItems();
+    craftItems({item : "Stone Sword", quantity : 1, type :  "Weapon",description : "+8 Attack"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -439,7 +442,8 @@ const App = () => {
   }
   function equipIS() {
     HomeMessages.unshift("Iron Sword equipped");
-    equipItems({item : "Iron Sword", quantity : 1, type :  "Weapon",description : "+10 Attack"});
+    equipItems();
+    craftItems({item : "Iron Sword", quantity : 1, type :  "Weapon",description : "+10 Attack"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -448,7 +452,8 @@ const App = () => {
   }
   function equipISh() {
     HomeMessages.unshift("Iron Shield equipped");
-    equipItems({item : "Iron Shield", quantity : 1, type :  "Weapon",description : "+7 Defence"});
+    equipItems();
+    craftItems({item : "Iron Shield", quantity : 1, type :  "Weapon",description : "+7 Defence"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -457,7 +462,8 @@ const App = () => {
   }
   function equipIA() {
     HomeMessages.unshift("Iron Armor equipped");
-    equipItems({item : "Iron Armor", quantity : 1, type :  "Weapon" ,description : "+10 Defence"});
+    equipItems();
+    craftItems({item : "Iron Armor", quantity : 1, type :  "Weapon" ,description : "+10 Defence"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -466,7 +472,8 @@ const App = () => {
   }
   function equipL() {
     HomeMessages.unshift("Leather Armor equipped");
-    equipItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"});
+    equipItems();
+    craftItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"})
     setHT(false);
     setTimeout(function(){
       setHT(true)

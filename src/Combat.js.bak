@@ -119,19 +119,19 @@ function heal(user){
       user.health += 10;
 	  healVal = 10;
     } else{ //heal 50
-      user.health += 50;
-	  healVal = 50;
+      user.health += 20;
+	  healVal = 20;
     }
   } else { //if the player heals
 	let tempInv = JSON.parse(user.inventory);
 	for (let x = 0; x < tempInv.length; x++){
-		if (tempInv[x].item === "food"){
+		if (tempInv[x].item === "meat"){
 			tempInv[x].quantity -= 1;
 			if (tempInv[x].quantity === 0){
-				delete tempInv[x];
+				tempInv.splice(x, 1);
 			user.inventory = JSON.stringify(tempInv);
-			user.health += 30;
-			healVal = 30
+			user.health += 20;
+			healVal = 20;
 			return [user, healVal];
 			}
 			

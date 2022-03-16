@@ -167,8 +167,11 @@ app.post("/collect", function (req, res) {
 
 app.post("/craft", function (req, res) {
   let item = req.body;
+  //console.log(item);
   removeItem(item);
+  //console.log(activeStats, "before");
   updateData();
+  //console.log(activeStats);
 });
 
 
@@ -199,25 +202,28 @@ app.get("/cave", function (req, res){
 
 app.post("/equip", function (req, res){
 	let itemEquip = req.body;
+	console.log(itemEquip);
 	let tempInv = JSON.parse(activeStats.inventory);
 	for (let x = 0; x < tempInv.length; x++){
 		if (tempInv[x].equipped === true && tempInv[x].type === itemEquip.type){
-			activeStats.attack -= tempInv[x].attack;
-			activeStats.defense -= tempInv[x].defense;
-			activeStats.speed -= tempInv[x].speed;
+			activeStats.attack = parseInt(activeStats.attack) - parseInt(tempInv[x].attack);
+			activeStats.defense = parseInt(activeStats.defense) - parseInt(tempInv[x].defense);
+			activeStats.speed = parseInt(activeStats.speed) - parseInt(tempInv[x].speed);
 			tempInv[x].equipped = false;
 			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 	for (let y = 0; y < tempInv.length; y++){
 		if (tempInv[y].item === itemEquip.item){
-			activeStats.attack += tempInv[y].attack;
-			activeStats.defense += tempInv[y].defense;
-			activeStats.speed += tempInv[y].speed;
+			activeStats.attack = parseInt(activeStats.attack) + parseInt(tempInv[y].attack);
+			activeStats.defense = parseInt(activeStats.defense) + parseInt(tempInv[y].defense);
+			activeStats.speed = parseInt(activeStats.speed) + parseInt(tempInv[y].speed);
 			tempInv[y].equipped = true;
 			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
+	console.log(activeStats);
+	updateData();
 });
 
 app.listen(8080, () => {
@@ -258,7 +264,7 @@ function removeItem(item){
 		if (tempInv[x].item === itemName){
 			tempInv[x].quantity -= item.quantity;
 			if (tempInv[x].quantity === 0){
-				delete tempInv[x];
+				tempInv.splice(x, 1);
 			activeStats.inventory = JSON.stringify(tempInv);
 			return
 		}
