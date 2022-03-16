@@ -218,11 +218,11 @@ app.post("/equip", function (req, res){
 			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
-}
+});
 
 app.listen(8080, () => {
     console.log('Listening on port 8080')
-});
+})
 
 function updateData(){
 	pool.query("UPDATE stats SET health = $1, attack = $2, defense = $3, speed = $4, inventory = $5 WHERE username = $6", [

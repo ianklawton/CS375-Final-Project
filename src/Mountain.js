@@ -8,7 +8,8 @@ import slaying from "./Images/deer.mp3";
 import stoning from "./Images/stones.mp3";
 import {collectItems, MountainMessages} from "./data";
 import useSound from 'use-sound';
-import {getActiveStats} from "./data"
+import {getActiveStats} from "./data";
+import nocraft from "./Images/error.mp3"; 
 
 const App = () => {
   const [b, setB] = useState(true)
@@ -20,6 +21,7 @@ const App = () => {
   const [table, setTable] = useState(getTable());
   const [slay] = useSound(slaying);
   const [stone] = useSound(stoning);
+  const [error] = useSound(nocraft);
 
   function handleClick(e) {
     e.preventDefault();
@@ -77,6 +79,7 @@ const App = () => {
       setTimeout(function(){
         setHT(true)
       }.bind(),0.5);
+      error();
 
     }
 
@@ -106,6 +109,7 @@ const App = () => {
     setTimeout(function(){
     setHT(true)
   }.bind(),0.5);
+    error();
 }
 }
 

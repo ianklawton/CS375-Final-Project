@@ -14,6 +14,7 @@ import crafting from "./Images/craft.mp3";
 import equipping from "./Images/equip.mp3";
 import opening from "./Images/doorOpen.mp3";
 import closing from "./Images/doorClose.mp3";
+import nocraft from "./Images/error.mp3"; 
 
 const App = () => {
   const [bool, setBool] = useState(true)
@@ -27,6 +28,7 @@ const App = () => {
   const [playbackRate] = React.useState(2);
   const [open] = useSound(opening, {playbackRate});
   const [close] = useSound(closing, {playbackRate});
+  const [error] = useSound(nocraft);
   const StyledButton = styled.button`
     font-size: 10px;
 `;
@@ -111,7 +113,6 @@ const App = () => {
 
             <StyledButton onClick={equipL}>Equip Leather Armor</StyledButton>
 
-            <StyledButton onClick={equipF}>Eat Food</StyledButton>
           </div>
 
         </Content3>
@@ -125,109 +126,287 @@ const App = () => {
 
   // Crafting functions
   function handleCraftWS() {
-    setB(true)
-    HomeMessages.unshift("Crafted a Wooden Sword");
-    collectItems({item : "Wooden Sword", quantity : 1, type : "Weapon",description : "+10 Attack", attack : 10, defense: 0,speed: 2, equipped : false});
-    craftItems({item : "Wood", quantity : 3, type : "Crafting Item",description : "For tools"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 3;
+    let countWood = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood){
+      setB(true)
+      HomeMessages.unshift("Crafted a Wooden Sword");
+      collectItems({item : "Wooden Sword", quantity : 1, type : "Weapon",description : "+10 Attack", attack : 10, defense: 0,speed: 2, equipped : false});
+      craftItems({item : "Wood", quantity : 3, type : "Crafting Item",description : "For tools"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough wood");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
+    
   }
   function handleCraftWP() {
-    setB(true)
-    HomeMessages.unshift("Crafted a Wooden Pickaxe");
-    collectItems({item : "Wooden Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
-    craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 2;
+    let countWood = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood){
+      setB(true)
+      HomeMessages.unshift("Crafted a Wooden Pickaxe");
+      collectItems({item : "Wooden Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
+      craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough wood");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftWSh() {
-    setB(true)
-    HomeMessages.unshift("Crafted a Wooden Shield");
-    collectItems({item : "Wooden Shield", quantity : 1, type : "Shield",description : "+5 Defense",  attack : 5, defense: 5,speed: -2, equipped : false})
-    craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 2;
+    let countWood = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood){
+      setB(true)
+      HomeMessages.unshift("Crafted a Wooden Shield");
+      collectItems({item : "Wooden Shield", quantity : 1, type : "Shield",description : "+5 Defense",  attack : 5, defense: 5,speed: -2, equipped : false})
+      craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough wood");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftSS() {
-    setB(true)
-    HomeMessages.unshift("Crafted a Stone Sword");
-    collectItems({item : "Stone Sword", quantity : 1, type : "Weapon",description : "+20 Attack", attack : 20, defense: 0,speed: 2, equipped : false})
-    craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 1;
+    let checkStone = 2;
+    let countWood = 0;
+    let countStone = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }else if(inventory[i].item === "Stone"){
+        countStone = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood && countStone >= checkStone){
+      setB(true)
+      HomeMessages.unshift("Crafted a Stone Sword");
+      collectItems({item : "Stone Sword", quantity : 1, type : "Weapon",description : "+20 Attack", attack : 20, defense: 0,speed: 2, equipped : false})
+      craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftSP() {
-    setB(true)
-    HomeMessages.unshift("Crafted a Stone Pickaxe");
-    collectItems({item : "Stone Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
-    craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 1;
+    let checkStone = 2;
+    let countWood = 0;
+    let countStone = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }else if(inventory[i].item === "Stone"){
+        countStone = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood && countStone >= checkStone){
+      setB(true)
+      HomeMessages.unshift("Crafted a Stone Pickaxe");
+      collectItems({item : "Stone Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
+      craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftIS() {
-    setB(true)
-    HomeMessages.unshift("Crafted an Iron Sword");
-    collectItems({item : "Iron Sword", quantity : 1, type : "Weapon",description : "+30 Attack",  attack : 30, defense: 0,speed: 0, equipped : false})
-    craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 1;
+    let checkIron = 2;
+    let countWood = 0;
+    let countIron = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }else if(inventory[i].item === "Iron"){
+        countIron = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood && countIron >= checkIron){
+      setB(true)
+      HomeMessages.unshift("Crafted an Iron Sword");
+      collectItems({item : "Iron Sword", quantity : 1, type : "Weapon",description : "+30 Attack",  attack : 30, defense: 0,speed: 0, equipped : false})
+      craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    } 
   }
   function handleCraftISh() {
-    setB(true)
-    HomeMessages.unshift("Crafted an Iron Shield");
-    collectItems({item : "Iron Shield", quantity : 1, type : "Shield",description : "+15 Defense +5 Attack", attack : 8, defense: 15,speed: -5, equipped : false})
-    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 1;
+    let checkIron = 1;
+    let checkStone = 1;
+    let countWood = 0;
+    let countIron = 0;
+    let countStone = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }else if(inventory[i].item === "Iron"){
+        countIron = inventory[i].quantity;
+      }else if(inventory[i].item === "Stone"){
+        countStone = inventory[i].quantity
+      }
+    }
+    if (countWood >= checkWood && countIron >= checkIron && countStone >= checkStone){
+      setB(true)
+      HomeMessages.unshift("Crafted an Iron Shield");
+      collectItems({item : "Iron Shield", quantity : 1, type : "Shield",description : "+15 Defense +5 Attack", attack : 8, defense: 15,speed: -5, equipped : false})
+      craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftIA() {
-    setB(true)
-    HomeMessages.unshift("Crafted an Iron Armor");
-    collectItems({item : "Iron Armor", quantity : 1, type : "Armor",description : "+30 Defence"})
-    craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkWood = 1;
+    let checkIron = 2;
+    let countWood = 0;
+    let countIron = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wood") {
+        countWood = inventory[i].quantity;
+      }else if(inventory[i].item === "Iron"){
+        countIron = inventory[i].quantity;
+      }
+    }
+    if (countWood >= checkWood && countIron >= checkIron){
+      setB(true)
+      HomeMessages.unshift("Crafted an Iron Armor");
+      collectItems({item : "Iron Armor", quantity : 1, type : "Armor",description : "+30 Defence"})
+      craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
+      craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function handleCraftL() {
-    setB(true)
-    HomeMessages.unshift("Crafted Leather Armor");
-    collectItems({item : "Leather Armor", quantity : 1, type : "Armor",description : "+10 Defense"})
-    craftItems({item : "Leather", quantity : 2, type : "Crafting Item",description : "For tools"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    craft();
+    let inventory = JSON.parse(stats.inventory);
+    let checkLeather = 2;
+    let countLeather = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Leather") {
+        countLeather = inventory[i].quantity;
+      }
+    }
+    if (countLeather >= checkLeather){
+      setB(true)
+      HomeMessages.unshift("Crafted Leather Armor");
+      collectItems({item : "Leather Armor", quantity : 1, type : "Armor",description : "+10 Defense"})
+      craftItems({item : "Leather", quantity : 2, type : "Crafting Item",description : "For tools"})
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      craft();
+    }else{
+      HomeMessages.unshift("You don't have enough materials");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
 
   // Equipping Functions
@@ -295,16 +474,6 @@ const App = () => {
     HomeMessages.unshift("Leather Armor equipped");
     equipItems();
     craftItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"})
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
-  }
-  function equipF() {
-    HomeMessages.unshift("Ate meat");
-    equipItems();
-    craftItems({item : "Venison", quantity : 1, type : "Crafting Item",description : "+10 Health"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
