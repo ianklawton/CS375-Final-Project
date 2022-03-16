@@ -51,7 +51,7 @@ app.post("/signup", function (req, res) {
 		plaintextPassword.length > 36
 	){
 
-		res.status(401).json({"error" : "Username or Password is doesn't have the expected format"});
+		res.status(401).json({"error" : "Username or Password doesn't have the expected format"});
 
 	} else{
 		//Pulling the usernames from the database
