@@ -411,67 +411,180 @@ const App = () => {
 
   // Equipping Functions
   function equipWS() {
-    HomeMessages.unshift("Wooden Sword equipped");
-    equipItems({item : "Wooden Sword", quantity : 1, type :  "Weapon",description : "+5 Attack"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wooden Sword") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Wooden Sword equipped");
+      equipItems({item : "Wooden Sword", quantity : 1, type :  "Weapon",description : "+5 Attack"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have a Wooden Sword");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function equipWSh() {
-    HomeMessages.unshift("Wooden Shield equipped");
-    equipItems({item : "Wooden Shield", quantity : 1, type :  "Weapon",description : "+3 Defence"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Wooden Shield") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Wooden Shield equipped");
+      equipItems({item : "Wooden Shield", quantity : 1, type :  "Weapon",description : "+3 Defence"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have a Wooden Shield");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }  
   }
   function equipSS() {
-    HomeMessages.unshift("Stone Sword equipped");
-    equipItems({item : "Stone Sword", quantity : 1, type :  "Weapon",description : "+8 Attack"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Stone Sword") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Stone Sword equipped");
+      equipItems({item : "Stone Sword", quantity : 1, type :  "Weapon",description : "+8 Attack"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have a Stone Sword");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error(); 
+    }
   }
   function equipIS() {
-    HomeMessages.unshift("Iron Sword equipped");
-    equipItems({item : "Iron Sword", quantity : 1, type :  "Weapon",description : "+10 Attack"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Iron Sword") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Iron Sword equipped");
+      equipItems({item : "Iron Sword", quantity : 1, type :  "Weapon",description : "+10 Attack"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have an Iron Sword");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function equipISh() {
-    HomeMessages.unshift("Iron Shield equipped");
-    equipItems({item : "Iron Shield", quantity : 1, type :  "Weapon",description : "+7 Defence"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Iron Shield") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Iron Shield equipped");
+      equipItems({item : "Iron Shield", quantity : 1, type :  "Weapon",description : "+7 Defence"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have an Iron Shield");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
   }
   function equipIA() {
-    HomeMessages.unshift("Iron Armor equipped");
-    equipItems({item : "Iron Armor", quantity : 1, type :  "Weapon" ,description : "+10 Defence"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Iron Armor") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Iron Armor equipped");
+      equipItems({item : "Iron Armor", quantity : 1, type :  "Weapon" ,description : "+10 Defence"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have an Iron Armor");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error();
+    }
+    
   }
   function equipL() {
-    HomeMessages.unshift("Leather Armor equipped");
-    equipItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"});
-    setHT(false);
-    setTimeout(function(){
-      setHT(true)
-    }.bind(),0.5);
-    equip();
+    let inventory = JSON.parse(stats.inventory);
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Iron Armor") {
+        count += 1
+      }
+    }
+    if (count > 0){
+      HomeMessages.unshift("Leather Armor equipped");
+      equipItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"});
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      equip();
+    }else{
+      HomeMessages.unshift("You don't have a Leather Armor");
+      setHT(false);
+      setTimeout(function(){
+        setHT(true)
+      }.bind(),0.5);
+      error(); 
+    }
   }
 };
 
