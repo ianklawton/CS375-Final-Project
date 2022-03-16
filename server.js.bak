@@ -210,10 +210,10 @@ app.post("/equip", function (req, res){
 	}
 	for (let y = 0; y < tempInv.length; y++){
 		if (tempInv[y].item === itemEquip.item){
-			activeStats.attack += tempInv[x].attack;
-			activeStats.defense += tempInv[x].defense;
-			activeStats.speed += tempInv[x].speed;
-			tempInv[x].equipped = true;
+			activeStats.attack += tempInv[y].attack;
+			activeStats.defense += tempInv[y].defense;
+			activeStats.speed += tempInv[y].speed;
+			tempInv[y].equipped = true;
 		}
 	}
 }
