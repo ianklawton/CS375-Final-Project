@@ -206,14 +206,16 @@ app.post("/equip", function (req, res){
 			activeStats.defense -= tempInv[x].defense;
 			activeStats.speed -= tempInv[x].speed;
 			tempInv[x].equipped = false;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 	for (let y = 0; y < tempInv.length; y++){
 		if (tempInv[y].item === itemEquip.item){
-			activeStats.attack += tempInv[x].attack;
-			activeStats.defense += tempInv[x].defense;
-			activeStats.speed += tempInv[x].speed;
+			activeStats.attack += tempInv[y].attack;
+			activeStats.defense += tempInv[y].defense;
+			activeStats.speed += tempInv[y].speed;
 			tempInv[y].equipped = true;
+			activeStats.inventory = JSON.stringify(tempInv);
 		}
 	}
 }
