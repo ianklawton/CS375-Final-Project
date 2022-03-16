@@ -53,13 +53,30 @@ const App = () => {
   }
 
   function collectOre(){
+    let inventory = JSON.parse(stats.inventory)
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].item === "Stone Pickaxe") {
+        count += 1;
+      }
+    }
+    if (count >= 1){
+    setB(true);
     collectItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "metal from iron ore"})
-    CaveMessages.unshift("You mined some ore");
+    CaveMessages.unshift("You mined some iron");
     setHT(false);
     setTimeout(function(){
       setHT(true)
     }.bind(),0.5);
   }
+  else{
+    CaveMessages.unshift("To mine stone, you need a Stone Pickaxe");
+    setHT(false);
+    setTimeout(function(){
+      setHT(true)
+    }.bind(),0.5);
+  }
+}
 
   async function getStats(){
     if(bool){

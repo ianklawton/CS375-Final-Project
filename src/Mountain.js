@@ -62,6 +62,7 @@ const App = () => {
       }
     }
     if (count >= 1){
+      setB(true);
       collectItems({item : "Stone", quantity : 1, type : "Crafting Item",description : ""})
       MountainMessages.unshift("You mined a stone");
       setHT(false);
@@ -76,13 +77,22 @@ const App = () => {
       setTimeout(function(){
         setHT(true)
       }.bind(),0.5);
-      stone();
+
     }
 
   }
 
   function killGoat(){
-    collectItems({item : "Meat", quantity : 1, type : "Food",description : "+8 Health"})
+    let inventory = JSON.parse(stats.inventory)
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].type === "Weapon") {
+        count += 1;
+      }
+    }
+    if (count >= 1){
+    setB(true)
+    collectItems({item : "Meat", quantity : 1, type : "Food",description : "+10 Health"})
     MountainMessages.unshift("The goat was slain, enjoy your trophy");
     setHT(false);
     setTimeout(function(){
@@ -90,6 +100,14 @@ const App = () => {
     }.bind(),0.5);
     slay();
   }
+  else{
+    MountainMessages.unshift("To kill the goat, you need a Sword");
+    setHT(false);
+    setTimeout(function(){
+    setHT(true)
+  }.bind(),0.5);
+}
+}
 
 
   return (

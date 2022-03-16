@@ -60,6 +60,14 @@ const App = () => {
 
   function killDeer(){
     setB(true);
+    let inventory = JSON.parse(stats.inventory)
+    let count = 0;
+    for(let i=0; i < inventory.length;i++){
+      if (inventory[i].type === "Weapon") {
+        count += 1;
+      }
+    }
+    if (count >= 1){
     collectItems({item : "Meat", quantity : 1, type : "Food",description : "+10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : "For tools"})
     WoodsMessages.unshift("The deer was slain, enjoy your trophy");
@@ -68,6 +76,15 @@ const App = () => {
       setHT(true)
     }.bind(),0.5);
     slay();
+  }
+  else{
+    WoodsMessages.unshift("To kill the deer, you need a Sword");
+    setHT(false);
+    setTimeout(function(){
+    setHT(true)
+  }.bind(),0.5);
+  }
+
   }
 
   function collectWood(){
