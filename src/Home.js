@@ -127,7 +127,7 @@ const App = () => {
   function handleCraftWS() {
     HomeMessages.unshift("Crafted a Wooden Sword");
     collectItems({item : "Wooden Sword", quantity : 1, type : "Weapon",description : "+5 Attack"});
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"});
+    craftItems({item : "Wood", quantity : 3, type : "Crafting Item",description : "For tools"});
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -137,7 +137,7 @@ const App = () => {
   function handleCraftWP() {
     HomeMessages.unshift("Crafted a Wooden Pickaxe");
     collectItems({item : "Wooden Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -147,7 +147,7 @@ const App = () => {
   function handleCraftWSh() {
     HomeMessages.unshift("Crafted a Wooden Shield");
     collectItems({item : "Wooden Shield", quantity : 1, type : "Weapon",description : "+3 Defence"})
-    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 2, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -157,7 +157,8 @@ const App = () => {
   function handleCraftSS() {
     HomeMessages.unshift("Crafted a Stone Sword");
     collectItems({item : "Stone Sword", quantity : 1, type : "Weapon",description : "+8 Attack"})
-    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -167,7 +168,8 @@ const App = () => {
   function handleCraftSP() {
     HomeMessages.unshift("Crafted a Stone Pickaxe");
     collectItems({item : "Stone Pickaxe", quantity : 1, type : "Crafting Tool",description : "For mining iron"})
-    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Stone", quantity : 2, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -177,7 +179,8 @@ const App = () => {
   function handleCraftIS() {
     HomeMessages.unshift("Crafted an Iron Sword");
     collectItems({item : "Iron Sword", quantity : 1, type : "Weapon",description : "+10 Attack"})
-    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -188,6 +191,8 @@ const App = () => {
     HomeMessages.unshift("Crafted an Iron Shield");
     collectItems({item : "Iron Shield", quantity : 1, type : "Weapon",description : "+7 Defence"})
     craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Stone", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -197,7 +202,8 @@ const App = () => {
   function handleCraftIA() {
     HomeMessages.unshift("Crafted an Iron Armor");
     collectItems({item : "Iron Shield", quantity : 1, type : "Weapon",description : "+10 Defence"})
-    craftItems({item : "Iron", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Iron", quantity : 2, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Wood", quantity : 1, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
@@ -207,7 +213,7 @@ const App = () => {
   function handleCraftL() {
     HomeMessages.unshift("Crafted Leather Armor");
     collectItems({item : "Leather Armor", quantity : 1, type : "Weapon",description : "+5 Defence"})
-    craftItems({item : "Leather", quantity : 1, type : "Crafting Item",description : "For tools"})
+    craftItems({item : "Leather", quantity : 2, type : "Crafting Item",description : "For tools"})
     setHT(false);
     setTimeout(function(){
       setHT(true)
