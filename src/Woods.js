@@ -60,7 +60,7 @@ const App = () => {
 
   function killDeer(){
     setB(true);
-    collectItems({item : "Venison", quantity : 1, type : "Food",description : "+10 Health"})
+    collectItems({item : "Meat", quantity : 1, type : "Food",description : "+10 Health"})
     collectItems({item : "Leather", quantity : 1, type : "Crafting Item",description : "For tools"})
     WoodsMessages.unshift("The deer was slain, enjoy your trophy");
     setHT(false);
