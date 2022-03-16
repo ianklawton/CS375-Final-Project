@@ -254,7 +254,7 @@ function page(){
           Enemy and Enemy Stats
           </div>
           <div>
-          <img src= {enemy}/>
+          <img width="25%" height="auto" src= {enemy}/>
           </div>
           <div>
           Enemy: {battle.monster} Health: {battle.health} Attack: {battle.attack} Defense: {battle.defense} Speed: {battle.speed}
